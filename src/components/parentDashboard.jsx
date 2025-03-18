@@ -22,7 +22,7 @@ const ParentDashboard = () => {
           </li>
           <li className="mb-4">
             <Link to="/dashboard/student-progress" className="flex items-center hover:text-yellow-400">
-              <FiBarChart2 className="mr-2" /> Child’s Progress
+              <FiBarChart2 className="mr-2" /> Children’s Progress
             </Link>
           </li>
           <li className="mb-4">
