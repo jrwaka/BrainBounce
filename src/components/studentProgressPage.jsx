@@ -1,5 +1,5 @@
 const StudentProgressPage = () => {
-    return <div>📊 Student Progress Chart Here</div>;
+    return <div className="pl-64">📊 Student Progress Chart Here</div>;
   };
   
   export default StudentProgressPage;
