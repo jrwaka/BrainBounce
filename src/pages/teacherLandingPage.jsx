@@ -2,7 +2,7 @@ import { FaUsers, FaChalkboardTeacher, FaCheckCircle, FaChartBar } from 'react-i
 
 export default function TeacherLandingPage() {
   return (
-    <div className="min-h-screen bg-gray-100 text-gray-900 font-family">
+    <div className="min-h-screen bg-gray-100 text-gray-900">
       {/* Hero Section */}
       <section className="bg-[url(./src/assets/teacher-background.jpg)] relative text-center py-64 text-white bg-cover bg-center">
       <div className="absolute inset-0 bg-black opacity-50"></div> {/* Shadow overlay */}

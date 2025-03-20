@@ -2,7 +2,7 @@ import { FaUserEdit, FaChalkboardTeacher, FaChartLine, FaCogs } from "react-icon
 
 export default function ParentLandingPage() {
   return (
-    <div className="min-h-screen bg-gray-100 text-gray-900 font-family">
+    <div className="min-h-screen bg-gray-100 text-gray-900">
       {/* Hero Section */}
       <section className="bg-[url(./src/assets/parent-background.jpg)] relative text-center py-64 text-white bg-cover bg-center">
       <div className="absolute inset-0 bg-black opacity-50"></div> {/* Shadow overlay */}

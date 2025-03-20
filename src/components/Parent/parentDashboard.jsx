@@ -1,8 +1,8 @@
 import { Link, Outlet } from "react-router-dom";
 import { FiBook, FiBarChart2, FiUser, FiGrid, FiPower, FiEye, FiBell } from "react-icons/fi";
-import Dashboard from "./small_parent_component/Dashboard";
-import ProfilePage from "./small_parent_component/parentProfilePage";
-import NavBar from "./small_component/navBar";
+import Dashboard from "./Dashboard";
+import ProfilePage from "./parentProfilePage";
+import NavBar from "../small_component/navBar";
 import { createContext, useContext } from "react";
 
 const UserContext= createContext();

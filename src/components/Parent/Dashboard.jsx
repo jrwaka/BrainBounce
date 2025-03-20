@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { FiBarChart2, FiBell, FiEye, FiGrid, FiPower, FiUser } from 'react-icons/fi';
 import { Link, useOutlet, useOutletContext } from 'react-router-dom';
-import { UseUser } from '../parentDashboard';
+import { UseUser } from './parentDashboard';
 
 function Dashboard() {
   const student = UseUser();
@@ -10,7 +10,7 @@ function Dashboard() {
 
   return (
     <>
-      <div className="flex pl-64 h-screen font-family w-full">
+      <div className="flex pl-64 h-screen w-full">
         {/* Main Content */}
         <div className="flex-1">
           <div className="p-6 mx-auto bg-blue-100 rounded-lg shadow-lg">
