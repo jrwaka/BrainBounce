@@ -42,7 +42,7 @@ const ParentDashboard = () => {
           {/* Sidebar */}
           <div className="w-64 fixed inset-y-0 left-0 h-full bg-y text-white bg-black p-6 flex flex-col justify-between">
             <Link
-              to={handleGoToParent}
+              to="Dashboard"
               className="flex items-center hover:text-yellow-400"
             >
               <img
@@ -91,7 +91,7 @@ const ParentDashboard = () => {
 
             <div className="mt-auto">
               <Link
-                to="/parent-dashboard/signout"
+                to="/parentDashboard/signout"
                 className="flex items-center hover:text-yellow-400"
               >
                 <FiPower className="mr-2" /> Sign Out

@@ -25,7 +25,7 @@ const ParentLogin = () => {
   };
 
   const handleSignupRedirect = () => {
-    navigate("/signup"); // Redirect to the signup page
+    navigate("/SignUp"); // Redirect to the signup page
   };
 
   return (
@@ -73,6 +73,12 @@ const ParentLogin = () => {
               Sign Up
             </button>
           </p>
+          <button
+              onClick={() => navigate("/landing-page")} // Redirect to the Login page
+              className="text-blue-500 hover:text-blue-600 mt-5"
+            >
+              Back to Home
+            </button>
         </div>
       </div>
     </div>

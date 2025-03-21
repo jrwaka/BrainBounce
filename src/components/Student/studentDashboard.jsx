@@ -6,64 +6,70 @@ const StudentDashboard = () => {
   return (
     <div className="flex h-screen">
       {/* Sidebar */}
-      <div className="w-54 bg-black text-white p-6">
+      <div className="w-64 fixed inset-y-0 left-0 bg-black text-white p-6 flex flex-col justify-between">
+        {/* Logo */}
         <Link
-          to="studentDashboard"
-          className="flex items-center hover:text-yellow-400"
+          to="studentWorkSpace"
+          className="flex items-center justify-center hover:text-yellow-400"
         >
           <img
             src="/src/assets/logo-white.png"
-            className="mb-10  object-center object-cover"
-            alt=""
+            className="object-center object-cover mb-12"
+            alt="Logo"
           />
         </Link>
-        <ul>
-          <li className="mb-4">
+
+        {/* Navigation Links */}
+        <ul className="flex-1 space-y-8">
+          <li>
             <Link
               to="StudentWorkSpace"
-              className="flex items-center hover:text-yellow-400"
+              className="flex items-center hover:text-yellow-400 transition"
             >
-              <MdMenuBook size={25} className="mr-2" /> Workspace
+              <MdMenuBook size={20} className="mr-3" /> Workspace
             </Link>
           </li>
-          <li className="mb-4">
+          <li>
             <Link
               to="studentProfileSection"
-              className="flex items-center hover:text-yellow-400"
+              className="flex items-center hover:text-yellow-400 transition"
             >
-              <FiUser className="mr-2" /> Profile
+              <FiUser size={20} className="mr-3" /> Profile
             </Link>
           </li>
-          <li className="mb-4">
+          <li>
             <Link
               to="studentLessonsSection"
-              className="flex items-center hover:text-yellow-400"
+              className="flex items-center hover:text-yellow-400 transition"
             >
-              <FiBook className="mr-2" /> Lessons
+              <FiBook size={20} className="mr-3" /> Lessons
             </Link>
           </li>
-          <li className="mb-4">
+          <li>
             <Link
               to="progressSection"
-              className="flex items-center hover:text-yellow-400"
+              className="flex items-center hover:text-yellow-400 transition"
             >
-              <FiBarChart2 className="mr-2" /> Progress
-            </Link>
-          </li>
-
-          <li className="mb-4">
-            <Link
-              to="../parentDashboard"
-              className="flex items-center hover:text-yellow-400"
-            >
-              <FiPower className="mr-2" /> Sign Out
+              <FiBarChart2 size={20} className="mr-3" /> Progress
             </Link>
           </li>
         </ul>
+
+        {/* Sign Out Button at the Bottom */}
+        <div>
+          <Link
+            to="../parentDashboard"
+            className="flex items-center hover:text-yellow-400 transition"
+          >
+            <FiPower size={20} className="mr-3" /> Sign Out
+          </Link>
+        </div>
       </div>
 
-      {/* Main Content */}
-      <Outlet />
+      {/* Main Content - Pushes Content to the Right */}
+      <div className="ml-64 flex-1 p-6">
+        <Outlet />
+      </div>
     </div>
   );
 };

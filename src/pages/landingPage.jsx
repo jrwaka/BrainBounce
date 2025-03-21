@@ -1,5 +1,5 @@
 import { FaBookOpen, FaWifi, FaChalkboardTeacher, FaGamepad } from "react-icons/fa";
-
+import { Link } from "react-router-dom";
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-gray-100 text-gray-900">
@@ -10,8 +10,13 @@ export default function LandingPage() {
                 <h1 className="text-4xl font-bold relative z-10">Unlock Learning Anytime, Anywhere!</h1>
                 <p className="mt-4 text-lg relative z-10">An educational platform designed to help students aged 6-12 years learn interactively at home.</p>
             <div className="mt-6 flex justify-center gap-4 relative z-10">
+                <Link to= "/SignUp">
                 <button className="bg-white text-blue-950 px-6 py-3 rounded-lg hover:bg-blue-950 hover:text-white transition duration-150 ease-in-out">Sign Up</button>
-                <button className="text-white hover:bg-black hover:text-white transition duration-150 border px-6 py-3 rounded-lg">Log In</button>
+                </Link>
+                <Link to= "/ParentLogin">
+                  <button className="text-white hover:bg-black hover:text-white transition duration-150 border px-6 py-3 rounded-lg">Log In
+                  </button>
+                </Link>
             </div>
         </section>
 
@@ -68,7 +73,9 @@ export default function LandingPage() {
       {/* CTA Section */}
       <section className="text-center py-16">
         <h2 className="text-2xl font-semibold">Start Your Learning Journey Today!</h2>
-        <button className="mt-6 bg-blue-800 text-white px-4 py-2 rounded">Sign Up Now</button>
+        <Link to="/SignUp">
+          <button className="mt-6 bg-blue-800 text-white px-4 py-2 rounded">Sign Up Now</button>
+        </Link>
       </section>
 
       {/* Footer */}

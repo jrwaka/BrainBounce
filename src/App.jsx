@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 
 // Parent Components
+
 import Dashboard from "./components/Parent/Dashboard";
 import NotificationsPage from "./components/Parent/notificationsPage";
 import ProfilePage from "./components/Parent/parentProfilePage";
@@ -29,7 +30,9 @@ import TrainerDashboard from "./components/Teacher/TrainerDashboard";
 import LandingPage from "./pages/landingPage";
 import ParentLandingPage from "./pages/parentLandingPage";
 import TeacherLandingPage from "./pages/teacherLandingPage";
-
+import ParentLogin from "./pages/Login";
+import SignUp from "./pages/SignUp";
+import AddChildProfile from "./pages/addChildProfile";
 const App = () => {
   return (
     <Router>
@@ -37,6 +40,9 @@ const App = () => {
         {/* Redirect "/" to landing page */}
         <Route path="/" element={<Navigate to="/landing-page" />} />
         <Route path="/landing-page" element={<LandingPage />} />
+        <Route path="/ParentLogin" element={<ParentLogin />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/add-child" element={<AddChildProfile />} />
         <Route path="/parent-landing-page" element={<ParentLandingPage />} />
         <Route path="/teacher-landing-page" element={<TeacherLandingPage />} />
 

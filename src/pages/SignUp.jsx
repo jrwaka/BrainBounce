@@ -107,12 +107,18 @@ const SignUp = () => {
           <p className="text-sm text-gray-600">
             Have an account?{" "}
             <button
-              onClick={() => navigate("/")} // Redirect to the Login page
+              onClick={() => navigate("/ParentLogin")} // Redirect to the Login page
               className="text-blue-500 hover:text-blue-600"
             >
               Login
             </button>
-          </p>
+            </p>
+            <button
+              onClick={() => navigate("/landing-page")} // Redirect to the Login page
+              className="text-blue-500 hover:text-blue-600 mt-5"
+            >
+              Back to Home
+            </button>
         </div>
       </div>
     </div>

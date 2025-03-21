@@ -45,7 +45,7 @@ function Dashboard() {
                 <h2 className="text-xl font-semibold">
                   Recent Notifications 📣
                 </h2>
-                <Link to="/parent-dashboard/notifications">
+                <Link to="/parentDashboard/notifications">
                   <button className="text-blue-600 flex items-center gap-1">
                     View All <FiEye />
                   </button>
@@ -69,7 +69,7 @@ function Dashboard() {
             <div className="mt-6 p-4 bg-white rounded-lg shadow">
               <div className="flex justify-between items-center mb-3">
                 <h2 className="text-xl font-semibold">Child’s Progress 📊</h2>
-                <Link to="/parent-dashboard/student-progress">
+                <Link to="/parentDashboard/student-progress">
                   <button className="text-blue-600 flex items-center gap-1">
                     View All <FiEye />
                   </button>
@@ -145,7 +145,7 @@ function Dashboard() {
               {/* Add Children Button */}
               <div className="mt-6">
                 <button className="bg-orange-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-orange-600 transition">
-                  +Add Children
+                  +Add Child
                 </button>
               </div>
             </div>

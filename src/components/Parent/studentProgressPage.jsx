@@ -4,7 +4,7 @@ const StudentProgressPage = () => {
       
     {/* Header Section */}
     <div className="w-full max-w-3xl bg-white shadow-md rounded-xl p-6 text-center relative">
-      <button className="absolute left-4 top-4 text-blue-600 flex items-center gap-2">
+      <button className="absolute left-4 top-4 text-blue-600 flex items-center gap-2" onClick={() => window.history.back()}>
         <FaArrowLeft /> Back
       </button>
       <div className="flex flex-col items-center">
