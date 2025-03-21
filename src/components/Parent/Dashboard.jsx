@@ -1,9 +1,13 @@
 import React, { useEffect } from "react";
 import { FiEye } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UseUser } from "./parentDashboard";
 
 function Dashboard() {
+  const navigate = useNavigate();
+  const navigateToLink = () => {
+    navigate("/studentDashboard");
+  };
   const StudentList = UseUser() || [
     {
       id: 1,
@@ -125,7 +129,10 @@ function Dashboard() {
                           <button className="bg-yellow-400 text-gray-900 font-medium py-1 px-3 rounded-md shadow-md hover:bg-yellow-500 transition">
                             +Add Course
                           </button>
-                          <button className="bg-blue-600 text-white font-medium py-1 px-3 rounded-md shadow-md hover:bg-blue-700 transition">
+                          <button
+                            onClick={navigateToLink}
+                            className="bg-blue-600 text-white font-medium py-1 px-3 rounded-md shadow-md hover:bg-blue-700 transition"
+                          >
                             Go To Workspace
                           </button>
                         </td>

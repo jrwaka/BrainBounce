@@ -68,7 +68,7 @@ const ParentDashboard = () => {
                   to="parent-profile"
                   className="flex items-center hover:text-yellow-400"
                 >
-                  <FiUser className="mr-2" /> Profilee
+                  <FiUser className="mr-2" /> Profile
                 </Link>
               </li>
               <li className="mb-10">

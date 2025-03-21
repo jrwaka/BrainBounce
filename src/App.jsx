@@ -16,6 +16,11 @@ import StudentProgressPage from "./components/Parent/studentProgressPage";
 
 // Landing Pages
 import ParentDashboard from "./components/Parent/parentDashboard";
+import ProgressSection from "./components/Student/progressSection";
+import StudentDashboard from "./components/Student/studentDashboard";
+import LessonsSection from "./components/Student/studentLessonsSection";
+import ProfileSection from "./components/Student/studentProfileSection";
+import StudentWorkSpace from "./components/Student/StudentWorkSpace";
 import TeacherDashboard from "./components/Teacher/DashboardTeacher";
 import TeacherNotificationPage from "./components/Teacher/teacherNotificationsPage";
 import TeacherProfilePage from "./components/Teacher/teacherProfilePage";
@@ -36,7 +41,7 @@ const App = () => {
         <Route path="/teacher-landing-page" element={<TeacherLandingPage />} />
 
         {/* Parent Dashboard Routes */}
-        <Route path="/parent-dashboard" element={<ParentDashboard />}>
+        <Route path="/parentDashboard" element={<ParentDashboard />}>
           <Route index element={<Navigate to="Dashboard" />} />
           <Route path="Dashboard" element={<Dashboard />} />
           <Route path="parent-profile" element={<ProfilePage />} />
@@ -61,6 +66,19 @@ const App = () => {
           <Route
             path="TeacherNotificationsPage"
             element={<TeacherNotificationPage />}
+          ></Route>
+        </Route>
+        <Route path="/studentDashboard" element={<StudentDashboard />}>
+          <Route index element={<Navigate to="StudentWorkSpace" />} />
+          <Route path="StudentWorkSpace" element={<StudentWorkSpace />}></Route>
+          <Route path="progressSection" element={<ProgressSection />}></Route>
+          <Route
+            path="studentLessonsSection"
+            element={<LessonsSection />}
+          ></Route>
+          <Route
+            path="studentProfileSection"
+            element={<ProfileSection />}
           ></Route>
         </Route>
 
