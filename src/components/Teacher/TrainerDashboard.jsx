@@ -1,41 +1,21 @@
 import React, { useEffect } from "react";
 import { FiEye } from "react-icons/fi";
 import { Link } from "react-router-dom";
-import { UseUser } from "./parentDashboard";
+import { UseUser } from "./DashboardTeacher";
 
-function Dashboard() {
-  const StudentList = UseUser() || [
-    {
-      id: 1,
-      image: "/src/assets/Profile_Images/child.png", // Replace with actual image path
-      name: "JP",
-      grade: "Primary 1",
-      currentCourse: "Math 101",
-    },
-    {
-      id: 2,
-      image: "/src/assets/Profile_Images/child.png", // Replace with actual image path
-      name: "Jane Smith",
-      grade: "Primary 2",
-      currentCourse: "Science 202",
-    },
-  ]; // Get student list from context
-
-  useEffect(() => {}, [StudentList]); // Runs when StudentList changes
+function TrainerDashboard() {
+  const ListOfStudent = UseUser();
+  useEffect(() => {}, [ListOfStudent]);
 
   return (
     <>
       <div className="flex pl-64 h-screen w-full">
-        {/* Main Content */}
         <div className="flex-1">
           <div className="p-6 mx-auto bg-blue-100 rounded-lg shadow-lg">
-            {/* Welcome Message */}
             <h1 className="text-xl font-bold text-blue- mb-4">
-              Hi, [Parent's Name]! 🎈 Ready to track your children's progress
+              Hi, [Teacher's Name]! 🎈 Ready to track your children's progress
               today? 🚀
             </h1>
-
-            {/* Notifications Section */}
             <div className="mt-6 p-4 bg-white rounded-lg shadow">
               <div className="flex justify-between items-center mb-3">
                 <h2 className="text-xl font-semibold">
@@ -60,8 +40,6 @@ function Dashboard() {
                 </div>
               </div>
             </div>
-
-            {/* Children’s Progress */}
             <div className="mt-6 p-4 bg-white rounded-lg shadow">
               <div className="flex justify-between items-center mb-3">
                 <h2 className="text-xl font-semibold">Child’s Progress 📊</h2>
@@ -82,18 +60,12 @@ function Dashboard() {
                 </div>
               </div>
             </div>
-
-            {/* Child's Profile */}
             <div className="p-6 rounded-xl shadow-lg bg-white mt-6">
-              {/* Table Title */}
               <h2 className="text-xl font-bold mb-4 text-gray-800">
                 Children Profiles
               </h2>
-
-              {/* Table Container for Scrollability */}
               <div className="overflow-x-auto">
                 <table className="w-full border-collapse rounded-lg shadow-md">
-                  {/* Table Header */}
                   <thead>
                     <tr className="bg-gray-100 text-gray-700">
                       <th className="p-3 text-left">Student</th>
@@ -103,24 +75,22 @@ function Dashboard() {
                       <th className="p-3 text-center">Action</th>
                     </tr>
                   </thead>
-
-                  {/* Table Body */}
                   <tbody>
-                    {StudentList.map((StudentList) => (
+                    {ListOfStudent.map((ListOfStudent) => (
                       <tr
-                        key={StudentList.id}
+                        key={ListOfStudent.id}
                         className="border-b hover:bg-gray-50 transition"
                       >
                         <td className="p-3">
                           <img
-                            src={StudentList.image}
+                            src={ListOfStudent.image}
                             alt="Student"
                             className="w-14 h-14 rounded-full border border-gray-300 mx-auto"
                           />
                         </td>
-                        <td className="p-3">{StudentList.name}</td>
-                        <td className="p-3">{StudentList.grade}</td>
-                        <td className="p-3">{StudentList.currentCourse}</td>
+                        <td className="p-3">{ListOfStudent.name}</td>
+                        <td className="p-3">{ListOfStudent.grade}</td>
+                        <td className="p-3">{ListOfStudent.currentCourse}</td>
                         <td className="p-3 flex justify-center gap-2">
                           <button className="bg-yellow-400 text-gray-900 font-medium py-1 px-3 rounded-md shadow-md hover:bg-yellow-500 transition">
                             +Add Course
@@ -134,8 +104,6 @@ function Dashboard() {
                   </tbody>
                 </table>
               </div>
-
-              {/* Add Children Button */}
               <div className="mt-6">
                 <button className="bg-orange-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-orange-600 transition">
                   +Add Children
@@ -149,4 +117,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default TrainerDashboard;
