@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; // For navigation
+import BackButton from "../components/small_component/backButton";
 
 const SignUp = () => {
   const [fullName, setFullName] = useState("");
@@ -112,13 +113,8 @@ const SignUp = () => {
             >
               Login
             </button>
-            </p>
-            <button
-              onClick={() => navigate("/landing-page")} // Redirect to the Login page
-              className="text-blue-500 hover:text-blue-600 mt-5"
-            >
-              Back to Home
-            </button>
+          </p>
+          <BackButton data={{Title:"Back To Home", width:"w-fit", path:"../landing-page"}}/>
         </div>
       </div>
     </div>
