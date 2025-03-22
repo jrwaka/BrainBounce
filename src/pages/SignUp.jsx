@@ -6,6 +6,7 @@ const SignUp = () => {
   const [fullName, setFullName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
+  const [role, setRole] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
@@ -24,7 +25,7 @@ const SignUp = () => {
     }
 
     // Simple validation for required fields
-    if (!fullName || !phoneNumber || !email || !password || !confirmPassword) {
+    if (!fullName || !phoneNumber || !email || !role || !password || !confirmPassword) {
       setError("All fields are required!");
       return;
     }
@@ -36,6 +37,7 @@ const SignUp = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        <img src="./src/assets/logo.png" alt="" className="h-12 mx-auto mb-4" />
         <h2 className="text-2xl font-semibold mb-4 text-center text-gray-700">Sign Up</h2>
         {error && <p className="text-red-500 text-sm text-center mb-4">{error}</p>}
         <form onSubmit={handleSignUp} className="flex flex-col space-y-4">
@@ -70,6 +72,14 @@ const SignUp = () => {
               required
               className="w-full p-2 border rounded focus:ring focus:ring-blue-300"
             />
+          </div>
+
+          <div>
+            <label className="block text-gray-600 text-sm font-medium mb-1">Role:</label>
+            <select name="role" id="" className="border w-1/3 py-1 px-0.5 rounded-sm" value={role} onChange={(e) => setRole(e.target.value)}>
+              <option value="parent">Parent</option>
+              <option value="teacher">Teacher</option>
+            </select>
           </div>
 
           <div>

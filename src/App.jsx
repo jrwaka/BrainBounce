@@ -33,6 +33,13 @@ import TeacherLandingPage from "./pages/teacherLandingPage";
 import ParentLogin from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import AddChildProfile from "./pages/addChildProfile";
+
+// Admin Components
+import AdminDashboard from "./components/Admin/adminDashboard";
+import AdminWorkSpace from "./components/Admin/AdminWorkSpace";
+import AdminLessonsSection from "./components/Admin/adminLessonsSection";
+import AdminProgress from "./components/Admin/adminProgress";
+import AdminProfileSection from "./components/Admin/adminProfileSection";
 const App = () => {
   return (
     <Router>
@@ -85,6 +92,21 @@ const App = () => {
           <Route
             path="studentProfileSection"
             element={<ProfileSection />}
+          ></Route>
+        </Route>
+
+        {/* Admin Dashboard Routes */}
+        <Route path="/adminDashboard" element={<AdminDashboard />}>
+          <Route index element={<Navigate to="AdminWorkSpace" />} />
+          <Route path="AdminWorkSpace" element={<AdminWorkSpace />}></Route>
+          <Route
+            path="adminLessonsSection"
+            element={<AdminLessonsSection />}
+          ></Route>
+          <Route path="adminProgress" element={<AdminProgress />}></Route>
+          <Route
+            path="adminProfileSection"
+            element={<AdminProfileSection />}
           ></Route>
         </Route>
 

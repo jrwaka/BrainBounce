@@ -25,6 +25,7 @@ const AddChildProfile = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+      <img src="./src/assets/logo.png" alt="" className="h-12 mx-auto mb-4" />
         <h2 className="text-2xl font-semibold mb-4 text-center text-gray-700">Add Child Profile</h2>
         {error && <p className="text-red-500 text-sm text-center mb-4">{error}</p>}
         <form onSubmit={handleAddChildProfile} className="flex flex-col space-y-4">

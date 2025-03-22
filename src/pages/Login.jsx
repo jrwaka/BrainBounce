@@ -18,7 +18,7 @@ const ParentLogin = () => {
     setError(""); // Reset error state before each attempt
 
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      await signInWithEmailAndPassword(auth, email, password, role);
       alert("Login Successful!");
       // Redirect to parent dashboard or another page after login
     } catch (err) {
@@ -33,6 +33,7 @@ const ParentLogin = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+      <img src="./src/assets/logo.png" alt="" className="h-12 mx-auto mb-4" />
         <h2 className="text-2xl font-semibold mb-4 text-center text-gray-700">Login</h2>
         {error && <p className="text-red-500 text-sm text-center mb-4">{error}</p>}
         <form onSubmit={handleLogin} className="flex flex-col space-y-4">
@@ -60,7 +61,7 @@ const ParentLogin = () => {
 
           <div>
             <label className="block text-gray-600 text-sm font-medium mb-1">Role:</label>
-            <select name="role" id="" className="border w-1/4 py-1 px-0.5 rounded-sm">
+            <select name="role" id="" className="border w-1/3 py-1 px-0.5 rounded-sm" value={role} onChange={(e) => setRole(e.target.value)}>
               <option value="parent">Parent</option>
               <option value="teacher">Teacher</option>
               <option value="admin">Admin</option>
