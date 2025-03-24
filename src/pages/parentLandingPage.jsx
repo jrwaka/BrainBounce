@@ -1,4 +1,5 @@
 import { FaUserEdit, FaChalkboardTeacher, FaChartLine, FaCogs } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export default function ParentLandingPage() {
   return (
@@ -7,6 +8,7 @@ export default function ParentLandingPage() {
       <section className="bg-[url(./src/assets/parent-background.jpg)] relative text-center py-64 text-white bg-cover bg-center">
       <div className="absolute inset-0 bg-black opacity-50"></div> {/* Shadow overlay */}
       <img src="./src/assets/logo-white.png" className="absolute top-4 left-4 h-12" alt="" />
+      <Link to="/ParentDashboard" className="absolute top-8 right-5 h-12">Go to Dashboard</Link>
         <h1 className="text-4xl font-bold relative z-10">Welcome to Your Parent Dashboard</h1>
         <p className="mt-4 text-lg relative z-10">Track your child's progress, assign lessons, and ensure a fun and interactive learning experience!</p>
       </section>
@@ -41,7 +43,7 @@ export default function ParentLandingPage() {
       {/* Quick Access Buttons */}
       <section className="py-16 px-6 text-center bg-gray-200">
         <h2 className="text-3xl font-semibold">Quick Actions</h2>
-        <div className="mt-8 flex justify-center gap-6">
+        <div className="mt-8 flex lg:flex-row flex-col justify-center gap-6">
           <button className="bg-blue-600 hover:bg-blue-800 duration-150 text-white px-6 py-3 rounded-lg">Assign New Lesson</button>
           <button className="bg-green-600 hover:bg-green-700 duration-150 text-white px-6 py-3 rounded-lg">View Progress</button>
           <button className="bg-yellow-600 hover:bg-yellow-500 text-white px-6 py-3 rounded-lg">Set Learning Goals</button>

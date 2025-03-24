@@ -1,12 +1,14 @@
 import { FaUsers, FaChalkboardTeacher, FaCheckCircle, FaChartBar } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 export default function TeacherLandingPage() {
   return (
     <div className="min-h-screen bg-gray-100 text-gray-900">
       {/* Hero Section */}
       <section className="bg-[url(./src/assets/teacher-background.jpg)] relative text-center py-64 text-white bg-cover bg-center">
-      <div className="absolute inset-0 bg-black opacity-50"></div> {/* Shadow overlay */}
-      <img src="./src/assets/logo-white.png" className="absolute top-4 left-4 h-12" alt="" />
+        <div className="absolute inset-0 bg-black opacity-50"></div> {/* Shadow overlay */}
+        <img src="./src/assets/logo-white.png" className="absolute top-4 left-4 h-12" alt="" />
+        <Link to="/DashboardTeacher" className="absolute top-8 right-5 h-12">Go to Dashboard</Link>
         <h1 className="text-4xl font-bold relative z-10">Welcome to Your Teacher Dashboard</h1>
         <p className="mt-4 text-lg relative z-10">Monitor your students' progress, assign lessons, and enhance the learning experience!</p>
       </section>
@@ -38,33 +40,12 @@ export default function TeacherLandingPage() {
         </div>
       </section>
 
-     {/* Quick Access Buttons */}
-     <section className="py-16 px-6 text-center bg-gray-200">
+      {/* Quick Access Buttons */}
+      <section className="py-16 px-6 text-center bg-gray-200">
         <h2 className="text-3xl font-semibold">Quick Actions</h2>
-        <div className="mt-8 flex justify-center gap-6">
+        <div className="mt-8 flex lg:flex-row flex-col justify-center gap-6">
           <button className="bg-green-600 text-white px-6 py-3 rounded-lg">Assign New Lesson</button>
           <button className="bg-blue-600 text-white px-6 py-3 rounded-lg">View Student Progress</button>
-        </div>
-      </section>
-
-      {/* Student Overview */}
-      <section className="py-16 px-6 text-center">
-        <h2 className="text-3xl font-semibold">Student Overview</h2>
-        <div className="mt-8 bg-white shadow-md rounded-xl p-6">
-          <h3 className="text-xl font-semibold">Student: [Student Name]</h3>
-          <p className="mt-2 text-gray-600">Current Level: Grade [X]</p>
-          <p className="mt-2 text-gray-600">Lessons Completed: [X] / [Total Lessons]</p>
-          <p className="mt-2 text-gray-600">Last Assignment: [Assignment Name]</p>
-          <p className="mt-4 text-gray-600">Progress: [Percentage]%</p>
-        </div>
-      </section>
-
-      {/* Analytics & Performance */}
-      <section className="py-16 px-6 text-center bg-gray-100">
-        <h2 className="text-3xl font-semibold">Student Performance</h2>
-        <div className="mt-8 bg-white shadow-md rounded-xl p-6">
-          <h3 className="text-xl font-semibold">Performance Graph</h3>
-          <p className="mt-4 text-gray-600">A visual representation of your students' progress over time.</p>
         </div>
       </section>
 

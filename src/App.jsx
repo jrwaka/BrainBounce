@@ -33,7 +33,7 @@ import TeacherLandingPage from "./pages/teacherLandingPage";
 import ParentLogin from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import AddChildProfile from "./pages/addChildProfile";
-
+import TeacherLessonsSection from "./components/Teacher/teacherLessonsSection";
 // Admin Components
 import AdminDashboard from "./components/Admin/adminDashboard";
 import AdminWorkSpace from "./components/Admin/AdminWorkSpace";
@@ -76,6 +76,7 @@ const App = () => {
             path="TeacherStudentProgressPages"
             element={<TeacherStudentProgress />}
           ></Route>
+          <Route path="TeacherLessonsSection" element={<TeacherLessonsSection />}></Route>
           <Route
             path="TeacherNotificationsPage"
             element={<TeacherNotificationPage />}

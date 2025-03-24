@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import { FiBarChart2, FiBell, FiGrid, FiPower, FiUser } from "react-icons/fi";
+import { FiBarChart2, FiBell, FiBook, FiGrid, FiPower, FiUser } from "react-icons/fi";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import NavBar from "../small_component/navBar";
 
@@ -70,6 +70,16 @@ const TeacherDashboard = () => {
                   <FiUser className="mr-2" /> Profile
                 </Link>
               </li>
+
+              <li className="mb-10">
+                <Link
+                  to="teacherLessonsSection"
+                  className="flex items-center hover:text-yellow-400"
+                >
+                  <FiBook className="mr-2" /> Lessons & Content
+                </Link>
+              </li>
+
               <li className="mb-10">
                 <Link
                   to="TeacherStudentProgressPages"
@@ -78,14 +88,14 @@ const TeacherDashboard = () => {
                   <FiBarChart2 className="mr-2" /> Child’s Progress
                 </Link>
               </li>
-              <li className="mb-10">
+              {/* <li className="mb-10">
                 <Link
                   to="teacherNotificationsPage"
                   className="flex items-center hover:text-yellow-400"
                 >
                   <FiBell className="mr-2" /> Notifications
                 </Link>
-              </li>
+              </li> */}
             </ul>
 
             <div className="mt-auto">

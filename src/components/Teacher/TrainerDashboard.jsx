@@ -21,7 +21,7 @@ function TrainerDashboard() {
                 <h2 className="text-xl font-semibold">
                   Recent Notifications 📣
                 </h2>
-                <Link to="/parent-dashboard/notifications">
+                <Link to="/DashboardTeacher/teacherNotificationsPage">
                   <button className="text-blue-600 flex items-center gap-1">
                     View All <FiEye />
                   </button>
@@ -43,7 +43,7 @@ function TrainerDashboard() {
             <div className="mt-6 p-4 bg-white rounded-lg shadow">
               <div className="flex justify-between items-center mb-3">
                 <h2 className="text-xl font-semibold">Child’s Progress 📊</h2>
-                <Link to="/parent-dashboard/student-progress">
+                <Link to="/DashboardTeacher/teacherStudentProgressPages">
                   <button className="text-blue-600 flex items-center gap-1">
                     View All <FiEye />
                   </button>
@@ -72,7 +72,6 @@ function TrainerDashboard() {
                       <th className="p-3 text-left">Name</th>
                       <th className="p-3 text-left">Level</th>
                       <th className="p-3 text-left">Current Course</th>
-                      <th className="p-3 text-center">Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -91,23 +90,10 @@ function TrainerDashboard() {
                         <td className="p-3">{ListOfStudent.name}</td>
                         <td className="p-3">{ListOfStudent.grade}</td>
                         <td className="p-3">{ListOfStudent.currentCourse}</td>
-                        <td className="p-3 flex justify-center gap-2">
-                          <button className="bg-yellow-400 text-gray-900 font-medium py-1 px-3 rounded-md shadow-md hover:bg-yellow-500 transition">
-                            +Add Course
-                          </button>
-                          <button className="bg-blue-600 text-white font-medium py-1 px-3 rounded-md shadow-md hover:bg-blue-700 transition">
-                            Go To Workspace
-                          </button>
-                        </td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
-              </div>
-              <div className="mt-6">
-                <button className="bg-orange-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-orange-600 transition">
-                  +Add Children
-                </button>
               </div>
             </div>
           </div>

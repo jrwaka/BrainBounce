@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom"; // For navigation
 import BackButton from "../components/small_component/backButton";
 
 const SignUp = () => {
-  const [fullName, setFullName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
@@ -25,7 +26,7 @@ const SignUp = () => {
     }
 
     // Simple validation for required fields
-    if (!fullName || !phoneNumber || !email || !role || !password || !confirmPassword) {
+    if (!firstName || !lastName || !phoneNumber || !email || !role || !password || !confirmPassword) {
       setError("All fields are required!");
       return;
     }
@@ -42,13 +43,24 @@ const SignUp = () => {
         {error && <p className="text-red-500 text-sm text-center mb-4">{error}</p>}
         <form onSubmit={handleSignUp} className="flex flex-col space-y-4">
           <div>
-            <label className="block text-gray-600 text-sm font-medium mb-1">Full Name:</label>
+            <label className="block text-gray-600 text-sm font-medium mb-1">First Name:</label>
             <input
               type="text"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
               required
-              className="w-full p-2 border rounded focus:ring focus:ring-blue-300"
+              className="w-full p-1 border rounded focus:ring focus:ring-blue-300"
+            />
+          </div>
+
+          <div>
+            <label className="block text-gray-600 text-sm font-medium mb-1">Last Name:</label>
+            <input
+              type="text"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              required
+              className="w-full p-1 border rounded focus:ring focus:ring-blue-300"
             />
           </div>
 
@@ -59,7 +71,7 @@ const SignUp = () => {
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
               required
-              className="w-full p-2 border rounded focus:ring focus:ring-blue-300"
+              className="w-full p-1 border rounded focus:ring focus:ring-blue-300"
             />
           </div>
 
@@ -70,13 +82,18 @@ const SignUp = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full p-2 border rounded focus:ring focus:ring-blue-300"
+              className="w-full p-1 border rounded focus:ring focus:ring-blue-300"
             />
           </div>
 
           <div>
             <label className="block text-gray-600 text-sm font-medium mb-1">Role:</label>
-            <select name="role" id="" className="border w-1/3 py-1 px-0.5 rounded-sm" value={role} onChange={(e) => setRole(e.target.value)}>
+            <select 
+              name="role" 
+              className="border w-1/3 py-1 px-0.5 rounded-sm" 
+              value={role} 
+              onChange={(e) => setRole(e.target.value)}
+            >
               <option value="parent">Parent</option>
               <option value="teacher">Teacher</option>
             </select>
@@ -89,7 +106,7 @@ const SignUp = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full p-2 border rounded focus:ring focus:ring-blue-300"
+              className="w-full p-1 border rounded focus:ring focus:ring-blue-300"
             />
           </div>
 
@@ -100,17 +117,17 @@ const SignUp = () => {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
-              className="w-full p-2 border rounded focus:ring focus:ring-blue-300"
+              className="w-full p-1 border rounded focus:ring focus:ring-blue-300"
             />
           </div>
         </form>
 
         <div className="text-center mt-4">
           <button
-            onClick={() => navigate("/add-child")} // Redirect to Add Child Profile page
-            className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition"
+            onClick={() => navigate(role === "teacher" ? "/apply" : "/add-child")} // Change button text based on role
+            className="w-full bg-blue-500 text-white p-1 rounded hover:bg-blue-600 transition"
           >
-            Add Child Profile
+            {role === "teacher" ? "Apply" : "Add Child Profile"}
           </button>
         </div>
 

@@ -1,5 +1,6 @@
 import React from "react";
 import { FiArrowRight, FiBook, FiEye, FiStar } from "react-icons/fi";
+import { Link } from "react-router-dom";
 
 const StudentWorkSpace = () => {
   return (
@@ -49,9 +50,11 @@ const StudentWorkSpace = () => {
               <h2 className="text-xl font-semibold">
                 Explore Different Lessons 📚
               </h2>
-              <button className="text-blue-600 flex items-center gap-1">
-                View All <FiEye />
-              </button>
+              <Link to="/StudentDashboard/studentLessonsSection">
+                <button className="text-blue-600 flex items-center gap-1">
+                  View All <FiEye />
+                </button>
+              </Link>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
