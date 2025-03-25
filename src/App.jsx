@@ -11,7 +11,6 @@ import {
 import Dashboard from "./components/Parent/Dashboard";
 import NotificationsPage from "./components/Parent/notificationsPage";
 import ProfilePage from "./components/Parent/parentProfilePage";
-import SignOutPage from "./components/Parent/signOutPage";
 import StudentProgressPage from "./components/Parent/studentProgressPage";
 // Teacher Components
 
@@ -40,9 +39,11 @@ import AdminWorkSpace from "./components/Admin/AdminWorkSpace";
 import AdminLessonsSection from "./components/Admin/adminLessonsSection";
 import AdminProgress from "./components/Admin/adminProgress";
 import AdminProfileSection from "./components/Admin/adminProfileSection";
+import { Toaster } from "react-hot-toast";
 const App = () => {
   return (
     <Router>
+      <Toaster position="top-right" removeDelay={1000} />
       <Routes>
         {/* Redirect "/" to landing page */}
         <Route path="/" element={<Navigate to="/landing-page" />} />
@@ -60,7 +61,6 @@ const App = () => {
           <Route path="parent-profile" element={<ProfilePage />} />
           <Route path="student-progress" element={<StudentProgressPage />} />
           <Route path="notifications" element={<NotificationsPage />} />
-          <Route path="signout" element={<SignOutPage />} />
         </Route>
 
         {/* Teacher Dashboard Routes */}
@@ -71,7 +71,7 @@ const App = () => {
             path="teacherProfilePage"
             element={<TeacherProfilePage />}
           ></Route>
-          <Route path="TeacherSignOutPage" element={<SignOutPage />}></Route>
+      
           <Route
             path="TeacherStudentProgressPages"
             element={<TeacherStudentProgress />}

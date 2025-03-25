@@ -67,7 +67,7 @@ const StudentDashboard = () => {
       </div>
 
       {/* Main Content - Pushes Content to the Right */}
-      <div className="ml-64 flex-1 p-6">
+      <div className="ml-64 flex-1">
         <Outlet />
       </div>
     </div>
