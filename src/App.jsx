@@ -23,23 +23,24 @@ import LessonsSection from "./components/Student/studentLessonsSection";
 import ProfileSection from "./components/Student/studentProfileSection";
 import StudentWorkSpace from "./components/Student/StudentWorkSpace";
 import TeacherDashboard from "./components/Teacher/DashboardTeacher";
+import TeacherLessonsSection from "./components/Teacher/teacherLessonsSection";
 import TeacherNotificationPage from "./components/Teacher/teacherNotificationsPage";
 import TeacherProfilePage from "./components/Teacher/teacherProfilePage";
 import TeacherStudentProgress from "./components/Teacher/TeacherStudentProgressPage";
 import TrainerDashboard from "./components/Teacher/TrainerDashboard";
-import LandingPage from "./pages/landingPage";
-import ParentLandingPage from "./pages/parentLandingPage";
-import TeacherLandingPage from "./pages/teacherLandingPage";
-import ParentLogin from "./pages/Login";
-import SignUp from "./pages/SignUp";
 import AddChildProfile from "./pages/addChildProfile";
-import TeacherLessonsSection from "./components/Teacher/teacherLessonsSection";
+import LandingPage from "./pages/landingPage";
+import ParentLogin from "./pages/Login";
+import ParentLandingPage from "./pages/parentLandingPage";
+import SignUp from "./pages/SignUp";
+import TeacherLandingPage from "./pages/teacherLandingPage";
 // Admin Components
 import AdminDashboard from "./components/Admin/adminDashboard";
-import AdminWorkSpace from "./components/Admin/AdminWorkSpace";
 import AdminLessonsSection from "./components/Admin/adminLessonsSection";
-import AdminProgress from "./components/Admin/adminProgress";
 import AdminProfileSection from "./components/Admin/adminProfileSection";
+import AdminProgress from "./components/Admin/adminProgress";
+import AdminWorkSpace from "./components/Admin/AdminWorkSpace";
+import ReactHookForm from "./components/reactHookForm";
 const App = () => {
   return (
     <Router>
@@ -76,7 +77,10 @@ const App = () => {
             path="TeacherStudentProgressPages"
             element={<TeacherStudentProgress />}
           ></Route>
-          <Route path="TeacherLessonsSection" element={<TeacherLessonsSection />}></Route>
+          <Route
+            path="TeacherLessonsSection"
+            element={<TeacherLessonsSection />}
+          ></Route>
           <Route
             path="TeacherNotificationsPage"
             element={<TeacherNotificationPage />}
@@ -110,6 +114,7 @@ const App = () => {
             element={<AdminProfileSection />}
           ></Route>
         </Route>
+        <Route path="reactHookForm" element={<ReactHookForm />}></Route>
 
         {/* Catch-all Route for 404 */}
         <Route
