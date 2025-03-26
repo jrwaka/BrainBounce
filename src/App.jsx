@@ -40,7 +40,7 @@ import AdminLessonsSection from "./components/Admin/adminLessonsSection";
 import AdminProfileSection from "./components/Admin/adminProfileSection";
 import AdminProgress from "./components/Admin/adminProgress";
 import AdminWorkSpace from "./components/Admin/AdminWorkSpace";
-import ReactHookForm from "./components/reactHookForm";
+
 const App = () => {
   return (
     <Router>
@@ -114,7 +114,6 @@ const App = () => {
             element={<AdminProfileSection />}
           ></Route>
         </Route>
-        <Route path="reactHookForm" element={<ReactHookForm />}></Route>
 
         {/* Catch-all Route for 404 */}
         <Route
