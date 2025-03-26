@@ -42,6 +42,12 @@ const ParentLogin = () => {
       );
   
       if (user) {
+        // Check if role matches
+        if (user.role !== data.role) {
+          toast.error("Incorrect role selected for this account.");
+          return;
+        }
+  
         sessionStorage.setItem("user", JSON.stringify(user));
         toast.success("Login successful!");
   
@@ -68,6 +74,7 @@ const ParentLogin = () => {
     }
   };
   
+  
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -76,21 +83,21 @@ const ParentLogin = () => {
         <h2 className="text-2xl font-semibold mb-4 text-center text-gray-700">Login</h2>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col space-y-4">
           <div>
-            <label className="block text-gray-600 text-sm font-medium mb-1">Email:</label>
             <input
               type="email"
               {...register("email")}
               className="w-full p-2 border rounded focus:ring focus:ring-blue-300"
+              placeholder="Email"
             />
             {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
           </div>
 
           <div>
-            <label className="block text-gray-600 text-sm font-medium mb-1">Password:</label>
             <input
               type="password"
               {...register("password")}
               className="w-full p-2 border rounded focus:ring focus:ring-blue-300"
+              placeholder="Password"
             />
             {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
           </div>
@@ -101,6 +108,7 @@ const ParentLogin = () => {
               {...register("role")}
               className="border w-1/3 py-1 px-0.5 rounded-sm"
             >
+              <option value="" disabled selected>Select Role</option>
               <option value="parent">Parent</option>
               <option value="teacher">Teacher</option>
               <option value="admin">Admin</option>

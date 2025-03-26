@@ -21,9 +21,9 @@ export default function LandingPage() {
         </section>
 
       {/* Key Features Section */}
-      <section className="py-16 px-6 text-center">
+      <section className="py-16 lg:px-24 px-6 text-center">
         <h2 className="text-2xl font-semibold">Why Choose BrainBounce?</h2>
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <div className="bg-white shadow-md rounded-xl p-6 text-left">
             <div className="text-4xl text-blue-800 mb-4"><FaBookOpen /></div>
             <h3 className="text-xl font-semibold">Interactive Learning</h3>
@@ -39,16 +39,12 @@ export default function LandingPage() {
             <h3 className="text-xl font-semibold">Teacher & Parent Portal</h3>
             <p className="mt-2 text-gray-600">Monitor progress and assign lessons.</p>
           </div>
-          <div className="bg-white shadow-md rounded-xl p-6 text-left">
-            <div className="text-4xl text-blue-800 mb-4"><FaGamepad /></div>
-            <h3 className="text-xl font-semibold">Learn Through Play</h3>
-            <p className="mt-2 text-gray-600">Exciting games and challenges make learning fun!</p>
-          </div>
+          
         </div>
       </section>
 
       {/* How It Works Section */}
-      <section className="bg-gray-200 py-16 px-6 text-center">
+      <section className="bg-gray-200 py-16 lg:px-24 px-6 text-center">
         <h2 className="text-2xl font-semibold">How It Works</h2>
         <div className="mt-8 grid grid-cols-1 md:grid-cols-4 gap-6">
           <div className="bg-white shadow-md rounded-xl p-6 text-center">

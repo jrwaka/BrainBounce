@@ -1,75 +1,129 @@
-import { FaUser, FaEdit, FaSignOutAlt, FaChild, FaChartBar } from "react-icons/fa";
+import { useState } from "react";
+import { FaUserPlus, FaEdit, FaTrash, FaUsers, FaTimes } from "react-icons/fa";
+
+const usersData = [
+  { id: 1, name: "John Doe", email: "john@example.com", role: "Teacher", status: "Active" },
+  { id: 2, name: "Jane Smith", email: "jane@example.com", role: "Parent", status: "Inactive" },
+];
+
 const AdminProfileSection = () => {
-    return <div className="min-h-screen bg-gray-100 text-gray-900 flex flex-col items-center p-6">
-              
-              {/* Profile Header */}
-              <div className="w-full max-w-3xl bg-white shadow-md rounded-xl p-6 text-center">
-                <div className="flex flex-col items-center">
-                  <div className="w-24 h-24 bg-gray-300 rounded-full flex items-center justify-center text-4xl">
-                    <FaUser className="text-gray-600" />
-                  </div>
-                  <h2 className="mt-4 text-2xl font-semibold">Admin Doe</h2>
-                  <p className="text-gray-600">johndoe@example.com</p>
-                  <button className="mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center gap-2">
-                    <FaEdit /> Edit Profile
-                  </button>
-                </div>
-              </div>
-        
-              {/* Child Profiles Section */}
-              <div className="w-full max-w-3xl bg-white shadow-md rounded-xl p-6 mt-6">
-                <h3 className="text-xl font-semibold mb-4 text-center">Children Profiles</h3>
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between bg-gray-200 p-4 rounded-lg">
-                    <div className="flex items-center gap-3">
-                      <FaChild className="text-blue-600 text-2xl" />
-                      <div>
-                        <p className="font-semibold">Alice Doe</p>
-                        <p className="text-gray-600 text-sm">Grade 3</p>
-                      </div>
-                    </div>
-                    <button className="text-blue-600">View Progress</button>
-                  </div>
-                  <div className="flex items-center justify-between bg-gray-200 p-4 rounded-lg">
-                    <div className="flex items-center gap-3">
-                      <FaChild className="text-blue-600 text-2xl" />
-                      <div>
-                        <p className="font-semibold">Bob Doe</p>
-                        <p className="text-gray-600 text-sm">Grade 5</p>
-                      </div>
-                    </div>
-                    <button className="text-blue-600">View Progress</button>
-                  </div>
-                </div>
-              </div>
-        
-              {/* Learning Progress Section */}
-              <div className="w-full max-w-3xl bg-white shadow-md rounded-xl p-6 mt-6">
-                <h3 className="text-xl font-semibold mb-4 text-center">Learning Progress</h3>
-                <div className="flex items-center gap-4 justify-center">
-                  <div className="text-center">
-                    <FaChartBar className="text-blue-600 text-4xl" />
-                    <p className="mt-2 text-gray-600">Alice: 75%</p>
-                  </div>
-                  <div className="text-center">
-                    <FaChartBar className="text-blue-600 text-4xl" />
-                    <p className="mt-2 text-gray-600">Bob: 85%</p>
-                  </div>
-                </div>
-              </div>
-        
-              {/* Settings & Logout */}
-              <div className="w-full max-w-3xl flex justify-between mt-6">
-                <button className="bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center gap-2">
-                  <FaEdit /> Edit Settings
-                </button>
-                <button className="bg-red-600 text-white px-4 py-2 rounded-lg flex items-center gap-2">
-                  <FaSignOutAlt /> Log Out
-                </button>
-              </div>
-              
-            </div>;
+  const [users, setUsers] = useState(usersData);
+  const [search, setSearch] = useState("");
+  const [roleFilter, setRoleFilter] = useState("");
+  const [editingUser, setEditingUser] = useState(null);
+  const [deletingUser, setDeletingUser] = useState(null);
+
+  const filteredUsers = users.filter(user =>
+    user.name.toLowerCase().includes(search.toLowerCase()) &&
+    (roleFilter ? user.role === roleFilter : true)
+  );
+
+  const handleEdit = (user) => {
+    setEditingUser(user);
   };
-  
-  export default AdminProfileSection;
-  
+
+  const handleDelete = (user) => {
+    setDeletingUser(user);
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-100 text-gray-900 flex flex-col items-center p-6">
+      {/* Header */}
+      <div className="w-full max-w-3xl bg-white shadow-md rounded-xl p-6 text-center">
+        <h2 className="text-2xl font-semibold flex items-center justify-center gap-2">
+          <FaUsers /> Manage Users
+        </h2>
+      </div>
+
+      {/* Controls */}
+      <div className="w-full max-w-3xl bg-white shadow-md rounded-xl p-6 mt-6">
+        <div className="flex gap-4">
+          <input
+            type="text"
+            placeholder="Search users..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full px-3 py-2 border rounded"
+          />
+          <select
+            value={roleFilter}
+            onChange={(e) => setRoleFilter(e.target.value)}
+            className="w-40 px-3 py-2 border rounded"
+          >
+            <option value="">All Roles</option>
+            <option value="Teacher">Teacher</option>
+            <option value="Parent">Parent</option>
+          </select>
+        </div>
+      </div>
+
+      {/* Users Table */}
+      <div className="w-full max-w-3xl bg-white shadow-md rounded-xl p-6 mt-6">
+        <table className="w-full border-collapse border border-gray-300">
+          <thead>
+            <tr className="bg-gray-200">
+              <th className="border p-2">Name</th>
+              <th className="border p-2">Email</th>
+              <th className="border p-2">Role</th>
+              <th className="border p-2">Status</th>
+              <th className="border p-2">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredUsers.map((user) => (
+              <tr key={user.id} className="text-center">
+                <td className="border p-2">{user.name}</td>
+                <td className="border p-2">{user.email}</td>
+                <td className="border p-2">{user.role}</td>
+                <td className="border p-2">
+                  <span className={user.status === "Active" ? "text-green-500" : "text-red-500"}>
+                    {user.status}
+                  </span>
+                </td>
+                <td className="border p-2 flex justify-center gap-2">
+                  <button onClick={() => handleEdit(user)} className="bg-yellow-500 text-white p-2 rounded flex items-center gap-1 hover:bg-yellow-600 transition">
+                    <FaEdit /> <span>Edit</span>
+                  </button>
+                  <button onClick={() => handleDelete(user)} className="bg-red-500 text-white p-2 rounded flex items-center gap-1 hover:bg-red-600 transition">
+                    <FaTrash /> <span>Delete</span>
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Edit User Modal */}
+      {editingUser && (
+        <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+            <h3 className="text-xl font-semibold">Edit User</h3>
+            <input className="w-full border p-2 mt-2" defaultValue={editingUser.name} />
+            <input className="w-full border p-2 mt-2" defaultValue={editingUser.email} />
+            <div className="flex justify-end mt-4 gap-2">
+              <button onClick={() => setEditingUser(null)} className="bg-gray-500 text-white px-4 py-2 rounded">Cancel</button>
+              <button className="bg-blue-600 text-white px-4 py-2 rounded">Save</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {deletingUser && (
+        <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-96 text-center">
+            <h3 className="text-xl font-semibold">Delete User?</h3>
+            <p className="text-gray-600">Are you sure you want to delete {deletingUser.name}?</p>
+            <div className="flex justify-center mt-4 gap-2">
+              <button onClick={() => setDeletingUser(null)} className="bg-gray-500 text-white px-4 py-2 rounded">Cancel</button>
+              <button className="bg-red-600 text-white px-4 py-2 rounded">Delete</button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default AdminProfileSection;

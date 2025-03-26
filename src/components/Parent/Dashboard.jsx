@@ -144,9 +144,11 @@ function Dashboard() {
 
               {/* Add Children Button */}
               <div className="mt-6">
-                <button className="bg-orange-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-orange-600 transition">
-                  +Add Child
-                </button>
+                <Link to="/add-child">
+                  <button className="bg-orange-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-orange-600 transition">
+                    +Add Child
+                  </button>
+                </Link>
               </div>
             </div>
           </div>
