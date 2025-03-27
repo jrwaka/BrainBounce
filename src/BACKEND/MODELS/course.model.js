@@ -8,12 +8,12 @@ const lessonSchema = new mongoose.Schema({
 
 const courseSchema = new mongoose.Schema({
   courseName: { type: String, required: true },
-  Teacher: {
+  teacherId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    unique: true,
+    ref: "User",
   },
-  courseLink: { type: String, required: true },
+  grade: { type: String, required: true },
   lessons: [lessonSchema],
   totalLessons: { type: Number, default: 0 }, // Store the total number of lessons
 });
