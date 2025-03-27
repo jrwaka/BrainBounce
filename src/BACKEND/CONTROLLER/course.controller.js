@@ -6,7 +6,7 @@ const {course} = require("../MODELS/course.model")
 
 require("dotenv").config();
 
-cloudinary.config({
+cloudinary.config({ 
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
@@ -15,77 +15,49 @@ cloudinary.config({
 
 const uploadCourse = async (req, res) => {
   try {
-    const { courseName, Teacher, lessons } = req.body;
+    const { courseName, teacherId, grade } = req.body;
 
-    // Check if the necessary fields are provided
-    if (
-      !courseName ||
-      !Teacher ||
-      !lessons ||
-      !Array.isArray(lessons)
-    ) {
-      return res.status(400).json({
-        success: false,
-        message:
-          "Missing required fields (courseName, Teacher, courseLink, and lessons are required)",
-      });
+    // Check if files are uploaded
+    if (!req.files || req.files.length === 0) {
+      return res
+        .status(400)
+        .json({ message: "At least one lesson file is required" });
     }
 
-    // Check if all lessons have the required fields (lessonTitle and quiz)
-    const invalidLesson = lessons.find(
-      (lesson) => !lesson.lessonTitle || !lesson.quiz
-    );
-    if (invalidLesson) {
-      return res.status(400).json({
-        success: false,
-        message: "Each lesson must have a title and quiz",
-      });
-    }
-
-    // Check if the number of files matches the number of lessons
-    if (req.files && req.files.length !== lessons.length) {
-      return res.status(400).json({
-        success: false,
-        message:
-          "The number of files uploaded does not match the number of lessons",
-      });
-    }
-
-    // Upload each lesson file to Cloudinary and associate the lesson link
-    const lessonsWithLinks = await Promise.all(
-      lessons.map(async (lesson, index) => {
-        // Upload the file to Cloudinary
-        const file = req.files[index]; // Get the file corresponding to this lesson
-        const cloudinaryResult = await cloudinary.uploader.upload(file.path, {
-          folder: "courses",
+    // Process lesson files
+    const lessons = await Promise.all(
+      req.files.map(async (file, index) => {
+        // Upload to Cloudinary
+        const result = await cloudinary.uploader.upload(file.path, {
+          resource_type: "auto",
         });
 
-        // Return the lesson with the lessonLink set to the Cloudinary URL
         return {
-          ...lesson,
-          lessonLink: cloudinaryResult.secure_url, // Use Cloudinary's URL
+          lessonTitle: req.body[`lessonTitle${index}`], // Get lesson title from request
+          lessonLink: result.secure_url, // Cloudinary URL
+          exercise: req.body[`exercise${index}`], // Exercise from request
         };
       })
     );
 
-    // Create the course object to save
-    const newCourse = new Course({
+    // Create course
+    const newCourse = new course({
       courseName,
-      Teacher,
-      courseLink,
-      lessons: lessonsWithLinks, // Updated lessons with the uploaded links
+      teacherId,
+      grade,
+      lessons,
     });
 
-    // Save the course to the database
-    const savedCourse = await newCourse.save();
+    await newCourse.save();
 
-    // Return the saved course
-    res.json({ success: true, data: savedCourse });
+    return res
+      .status(201)
+      .json({ message: "Course uploaded successfully", course: newCourse });
   } catch (error) {
-    console.error(error);
-    res
+    console.error("Error uploading course:", error);
+    return res
       .status(500)
-      .json({ success: false, message: "Upload failed", error: error.message });
+      .json({ message: "Server error", error: error.message });
   }
 };
 
