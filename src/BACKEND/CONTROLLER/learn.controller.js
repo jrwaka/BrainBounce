@@ -1,27 +1,27 @@
 // controllers/learn.controller.js
-const LearningProgress = require("../models/LearningProgress");
-const Course = require("../models/Course");
-const Child = require("../models/Child");
+const { progress } = require("../MODELS/progress.model");
+const { course } = require("../MODELS/course.model");
+const { child } = require("../MODELS/child.model");
 
 // Function to enroll a child in a course and initialize progress
-exports.enrollInCourse = async (req, res) => {
+const enrollInCourse = async (req, res) => {
   try {
     const { childId, courseId } = req.body;
 
     // Check if the child exists
-    const child = await Child.findById(childId);
-    if (!child) {
+    const Child = await child.findById(childId);
+    if (!Child) {
       return res.status(404).json({ message: "Child not found" });
     }
 
     // Check if the course exists
-    const course = await Course.findById(courseId);
-    if (!course) {
+    const Course = await course.findById(courseId);
+    if (!Course) {
       return res.status(404).json({ message: "Course not found" });
     }
 
     // Check if the child is already enrolled in the course
-    const existingProgress = await LearningProgress.findOne({
+    const existingProgress = await progress.findOne({
       childId,
       courseId,
     });
@@ -32,11 +32,11 @@ exports.enrollInCourse = async (req, res) => {
     }
 
     // Create a new LearningProgress document
-    const newProgress = new LearningProgress({
+    const newProgress = new progress({
       childId,
       courseId,
       completedLessons: [],
-      totalLessons: course.totalLessons, // Assumes the Course model has a `totalLessons` field
+      totalLessons: course.totalLessons, 
       progressPercentage: 0,
     });
 
@@ -55,13 +55,13 @@ exports.enrollInCourse = async (req, res) => {
 };
 
 // Function to mark a lesson as completed and track progress
-exports.completeLesson = async (req, res) => {
+const completeLesson = async (req, res) => {
   try {
     const { childId, courseId, lessonId } = req.body;
 
     // Find the LearningProgress document for this child and course
-    const progress = await LearningProgress.findOne({ childId, courseId });
-    if (!progress) {
+    const Progress = await progress.findOne({ childId, courseId });
+    if (!Progress) {
       return res
         .status(404)
         .json({ message: "Progress not found for this child and course" });
@@ -91,25 +91,31 @@ exports.completeLesson = async (req, res) => {
 };
 
 // Function to get the progress of a child in a specific course
-exports.getProgress = async (req, res) => {
+const getProgress = async (req, res) => {
   try {
     const { childId, courseId } = req.params;
 
     // Find the LearningProgress document for this child and course
-    const progress = await LearningProgress.findOne({
+    const Progress = await progress.findOne({
       childId,
       courseId,
     }).populate("courseId");
-    if (!progress) {
+    if (!Progress) {
       return res.status(404).json({ message: "Progress not found" });
     }
 
     res.status(200).json({
       message: "Progress retrieved successfully",
-      progress,
+      Progress,
     });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Server Error" });
   }
+};
+
+module.exports = {
+  enrollInCourse,
+  completeLesson,
+  getProgress,
 };

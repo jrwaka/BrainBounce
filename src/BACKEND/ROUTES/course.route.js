@@ -8,7 +8,7 @@ const upload = multer({ storage });
 
 const { uploadCourse } = require("../CONTROLLER/course.controller");
 
-router.post("/uploadCourse", upload.array("files"), uploadCourse);
+router.post("/uploadCourse", upload.array("lessonFiles"), uploadCourse);
 
 
 module.exports= router;
