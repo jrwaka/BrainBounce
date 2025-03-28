@@ -8,6 +8,7 @@ function AddCourse({ functionObjectData, stateObjectData }) {
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors },
   } = useForm();
 

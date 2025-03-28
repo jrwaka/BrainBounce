@@ -1,12 +1,6 @@
 {
   "courses": [
     {
-      "id": "5bd1",
-      "title": "Imibare",
-      "fileUrl": "https://files.eric.ed.gov/fulltext/EJ1172284.pdf",
-      "createdAt": "2025-03-28T21:14:12.441Z"
-    },
-    {
       "id": "2df1",
       "title": "Math",
       "fileUrl": "Mathematics  SB (1).pdf",
