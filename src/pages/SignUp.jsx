@@ -71,7 +71,7 @@ const SignUp = () => {
   
       if (data.role === "teacher") {
         toast.success("Application received successfully! Check your email.");
-        navigate("/apply");
+        navigate("/landing-page");
       } else {
         toast.success("Signed Up Successfully!");
         navigate("/ParentLogin");
@@ -129,7 +129,10 @@ const SignUp = () => {
           </div>
           {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
 
-          <input {...register("confirmPassword")} placeholder="Confirm Password" type="password" className="w-full p-2 border rounded focus:ring focus:ring-blue-300" />
+          <div className="relative">
+          <input {...register("confirmPassword")} placeholder="Confirm Password" type={showPassword ? "text" : "password"} className="w-full p-2 border rounded focus:ring focus:ring-blue-300" />
+            <button onClick={togglePasswordVisibility} className="absolute top-0.5 right-0.5 bottom-0.5 left-[87%] bg-white">{showPassword?<IoEyeOutline className="place-self-center" size={25} />:<IoEyeOffOutline className="place-self-center" size={25} />}</button>
+          </div>
             {errors.confirmPassword && <p className="text-red-500 text-sm">{errors.confirmPassword.message}</p>}
 
           <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition">

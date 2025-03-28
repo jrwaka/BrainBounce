@@ -27,7 +27,6 @@ import TeacherNotificationPage from "./components/Teacher/teacherNotificationsPa
 import TeacherProfilePage from "./components/Teacher/teacherProfilePage";
 import TeacherStudentProgress from "./components/Teacher/TeacherStudentProgressPage";
 import TrainerDashboard from "./components/Teacher/TrainerDashboard";
-import AddChildProfile from "./pages/addChildProfile";
 import LandingPage from "./pages/landingPage";
 import ParentLogin from "./pages/Login";
 import ParentLandingPage from "./pages/parentLandingPage";
@@ -50,7 +49,6 @@ const App = () => {
         <Route path="/landing-page" element={<LandingPage />} />
         <Route path="/ParentLogin" element={<ParentLogin />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/add-child" element={<AddChildProfile />} />
         <Route path="/parent-landing-page" element={<ParentLandingPage />} />
         <Route path="/teacher-landing-page" element={<TeacherLandingPage />} />
 

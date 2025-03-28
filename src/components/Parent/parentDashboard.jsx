@@ -52,6 +52,10 @@ const ParentDashboard = () => {
     },
   ];
 
+  const toggleChatBox = () => {
+    setShowChatBox((prevShowChatBox) => !prevShowChatBox);
+  };
+
   return (
     <UserContext.Provider value={StudentList}>
       <div className="flex">
@@ -108,11 +112,11 @@ const ParentDashboard = () => {
         </div>
 
         <div className="flex-1 p-6">
-          <NavBar userData={userData} />
+          <NavBar showingChatBox={toggleChatBox} userData={userData} />
           {showChatBox && (
             <div className="fixed flex border-t-2 border-blue-500 justify-center items-center bg-blue-300 left-[60%] right-2 overflow-hidden rounded-xl shadow-md shadow-gray-600 top-0">
               <div className="bg-white h-full w-full max-w-[50rem] rounded-xl overflow-hidden">
-                <ChatBox />
+                <ChatBox hidingChatBox={toggleChatBox} />
               </div>
             </div>
           )}

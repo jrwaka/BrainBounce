@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { object, z } from "zod";
@@ -6,6 +6,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import BackButton from "../components/small_component/backButton";
+import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email format"),
@@ -14,6 +15,7 @@ const loginSchema = z.object({
 });
 
 const ParentLogin = () => {
+  const [showPassword, setShowPassword] = useState(false); // Define the showPassword state
   const navigate = useNavigate();
   const {
     register,
@@ -42,6 +44,12 @@ const ParentLogin = () => {
       );
   
       if (user) {
+        // Check if role matches
+        if (user.role !== data.role) {
+          toast.error("Incorrect role selected for this account.");
+          return;
+        }
+  
         sessionStorage.setItem("user", JSON.stringify(user));
         toast.success("Login successful!");
   
@@ -68,6 +76,10 @@ const ParentLogin = () => {
     }
   };
   
+  // State to toggle password visibility
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  }
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -76,31 +88,43 @@ const ParentLogin = () => {
         <h2 className="text-2xl font-semibold mb-4 text-center text-gray-700">Login</h2>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col space-y-4">
           <div>
-            <label className="block text-gray-600 text-sm font-medium mb-1">Email:</label>
             <input
               type="email"
               {...register("email")}
               className="w-full p-2 border rounded focus:ring focus:ring-blue-300"
+              placeholder="Email"
             />
             {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
           </div>
 
-          <div>
-            <label className="block text-gray-600 text-sm font-medium mb-1">Password:</label>
+          <div className="relative">
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               {...register("password")}
               className="w-full p-2 border rounded focus:ring focus:ring-blue-300"
+              placeholder="Password"
             />
-            {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
+
+            <button
+              type="button"
+              onClick={togglePasswordVisibility}
+              className="absolute top-0.5 right-0.5 bottom-0.5 left-[87%] bg-white"
+            >
+              {showPassword ? (
+                <IoEyeOutline className="place-self-center" size={25} />
+              ) : (
+                <IoEyeOffOutline className="place-self-center" size={25} />
+              )}
+            </button>
           </div>
+          {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
 
           <div>
-            <label className="block text-gray-600 text-sm font-medium mb-1">Role:</label>
             <select
               {...register("role")}
               className="border w-1/3 py-1 px-0.5 rounded-sm"
             >
+              <option value="" disabled selected>Select Role</option>
               <option value="parent">Parent</option>
               <option value="teacher">Teacher</option>
               <option value="admin">Admin</option>

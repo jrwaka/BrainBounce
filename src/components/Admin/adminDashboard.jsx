@@ -43,14 +43,14 @@ const AdminDashboard = () => {
               <FiBook size={20} className="mr-3" /> Lessons & Content
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link
               to="adminProgress"
               className="flex items-center hover:text-yellow-400 transition"
             >
               <FiBarChart2 size={20} className="mr-3" /> Progress
             </Link>
-          </li>
+          </li> */}
         </ul>
 
         {/* Sign Out Button at the Bottom */}
