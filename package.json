@@ -11,12 +11,8 @@
     "server": "npx json-server --watch db.json --port 5173"
   },
   "dependencies": {
-<<<<<<< HEAD
-    "@splidejs/react-splide": "^0.7.12",
-=======
     "@hookform/resolvers": "^4.1.3",
     "@splidejs/splide": "^4.1.4",
->>>>>>> 5fdf2871bf42a3d1abd803701538d35e41099782
     "@splidejs/splide-extension-auto-scroll": "^0.5.3",
     "@tailwindcss/vite": "^4.0.14",
     "axios": "^1.8.4",
