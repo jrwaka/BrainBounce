@@ -97,7 +97,7 @@ function AddCourse({ functionObjectData, stateObjectData }) {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }
 
