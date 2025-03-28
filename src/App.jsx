@@ -31,7 +31,6 @@ import ParentLandingPage from "./pages/parentLandingPage";
 import TeacherLandingPage from "./pages/teacherLandingPage";
 import ParentLogin from "./pages/Login";
 import SignUp from "./pages/SignUp";
-import AddChildProfile from "./pages/addChildProfile";
 import TeacherLessonsSection from "./components/Teacher/teacherLessonsSection";
 // Admin Components
 import AdminDashboard from "./components/Admin/adminDashboard";
@@ -50,7 +49,6 @@ const App = () => {
         <Route path="/landing-page" element={<LandingPage />} />
         <Route path="/ParentLogin" element={<ParentLogin />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/add-child" element={<AddChildProfile />} />
         <Route path="/parent-landing-page" element={<ParentLandingPage />} />
         <Route path="/teacher-landing-page" element={<TeacherLandingPage />} />
 

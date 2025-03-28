@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const AddChildProfile = () => {
+const AddChildProfile = ({closeForm, formState}) => {
   const [childName, setChildName] = useState("");
   const [childAge, setChildAge] = useState("");
   const [grade, setGrade] = useState("");
@@ -21,10 +21,14 @@ const AddChildProfile = () => {
     alert("Child Profile Added Successfully!");
     // Redirect or clear form logic here
   };
-
+  const changeFormState = () => {
+    if (closeForm) {
+      closeForm(); // Call the function passed from the parent
+    }
+  };  
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+    <>
+      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md border">
       <img src="./src/assets/logo.png" alt="" className="h-12 mx-auto mb-4" />
         <h2 className="text-2xl font-semibold mb-4 text-center text-gray-700">Add Child Profile</h2>
         {error && <p className="text-red-500 text-sm text-center mb-4">{error}</p>}
@@ -67,16 +71,21 @@ const AddChildProfile = () => {
               <option value="Grade 6">Primary 6</option>
             </select>
           </div>
-
+          <div className="flex justify-between gap-5">
           <button
             type="submit"
             className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition"
           >
             Add Profile
           </button>
+
+          <button onClick={changeFormState} className="bg-slate-500 text-white p-2 rounded">
+            Cancel
+          </button>
+          </div>
         </form>
       </div>
-    </div>
+    </>
   );
 };
 
