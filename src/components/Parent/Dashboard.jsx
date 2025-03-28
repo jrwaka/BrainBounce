@@ -1,9 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FiEye } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 import { UseUser } from "./parentDashboard";
-
+import AddChildProfile from "./addChildProfile";
 function Dashboard() {
+  //Add Children State
+  const [addChildren, setAddChildren] = useState(false);
+
+
   const navigate = useNavigate();
   const navigateToLink = () => {
     navigate("/studentDashboard");
@@ -26,7 +30,9 @@ function Dashboard() {
   ]; // Get student list from context
 
   useEffect(() => {}, [StudentList]); // Runs when StudentList changes
-
+  const handleAddChild = () => {
+    setAddChildren(()=>!addChildren);
+  }
   return (
     <>
       <div className="flex pl-64 h-screen w-full">
@@ -96,7 +102,7 @@ function Dashboard() {
 
               {/* Table Container for Scrollability */}
               <div className="overflow-x-auto">
-                <table className="w-full border-collapse rounded-lg shadow-md">
+                                <table className="w-full border-collapse rounded-lg shadow-md">
                   {/* Table Header */}
                   <thead>
                     <tr className="bg-gray-100 text-gray-700">
@@ -143,10 +149,13 @@ function Dashboard() {
               </div>
 
               {/* Add Children Button */}
-              <div className="mt-6">
-                <button className="bg-orange-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-orange-600 transition">
-                  +Add Child
-                </button>
+              <div className="mt-6 relative">
+                  <button onClick={() => handleAddChild()} className="bg-orange-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-orange-600 transition">
+                    +Add Child
+                  </button>
+                  {addChildren &&  <div className={`absolute w-2/3 rounded-lg transform transition-all duration-300 ease-in-out ${addChildren ? 'scale-100 translate-x-80 -translate-y-[100%]' : 'scale-0 translate-x-50'}`}>`
+                    <AddChildProfile closeForm={handleAddChild} formState={addChildren} />
+                  </div>}
               </div>
             </div>
           </div>

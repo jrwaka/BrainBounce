@@ -1,90 +1,156 @@
 import React, { useState } from "react";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { app } from "../firebaseConfig"; // Import Firebase config
-import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { object, z } from "zod";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 import BackButton from "../components/small_component/backButton";
+import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
+
+const loginSchema = z.object({
+  email: z.string().email("Invalid email format"),
+  password: z.string().min(6, "Password must be at least 6 characters long"),
+  role: z.enum(["parent", "teacher", "admin"], "Role is required"),
+});
 
 const ParentLogin = () => {
-  const [email, setEmail] = useState(""); // email state
-  const [password, setPassword] = useState(""); // password state
-  const [role, setRole] = useState("");
-  const [error, setError] = useState(""); // error state
+  const [showPassword, setShowPassword] = useState(false); // Define the showPassword state
+  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(loginSchema),
+  });
 
-  const auth = getAuth(app);
-  const navigate = useNavigate(); // Hook for navigation
-
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setError(""); // Reset error state before each attempt
-
+  const onSubmit = async (data) => {
     try {
-      await signInWithEmailAndPassword(auth, email, password, role);
-      alert("Login Successful!");
-      // Redirect to parent dashboard or another page after login
-    } catch (err) {
-      setError("Invalid email or password."); // Error message on failure
+      // Retrieve all users from localStorage
+      const users = Object.keys(localStorage)
+        .map((key) => {
+          try {
+            return JSON.parse(localStorage.getItem(key));
+          } catch (error) {
+            return null; // Skip non-JSON items
+          }
+        })
+        .filter((user) => user !== null); // Remove invalid entries
+  
+      // Find user with matching email & password
+      const user = users.find(
+        (user) => user.email === data.email && user.password === data.password
+      );
+  
+      if (user) {
+        // Check if role matches
+        if (user.role !== data.role) {
+          toast.error("Incorrect role selected for this account.");
+          return;
+        }
+  
+        sessionStorage.setItem("user", JSON.stringify(user));
+        toast.success("Login successful!");
+  
+        // Redirect based on role
+        switch (user.role) {
+          case "parent":
+            navigate("/parent-landing-page");
+            break;
+          case "teacher":
+            navigate("/teacher-landing-page");
+            break;
+          case "admin":
+            navigate("/adminDashboard");
+            break;
+          default:
+            toast.error("Invalid role detected.");
+        }
+      } else {
+        toast.error("Invalid email or password");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      toast.error("Something went wrong. Please try again.");
     }
   };
-
-  const handleSignupRedirect = () => {
-    navigate("/SignUp"); // Redirect to the signup page
-  };
+  
+  // State to toggle password visibility
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  }
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-      <img src="./src/assets/logo.png" alt="" className="h-12 mx-auto mb-4" />
+        <img src="./src/assets/logo.png" alt="" className="h-12 mx-auto mb-4" />
         <h2 className="text-2xl font-semibold mb-4 text-center text-gray-700">Login</h2>
-        {error && <p className="text-red-500 text-sm text-center mb-4">{error}</p>}
-        <form onSubmit={handleLogin} className="flex flex-col space-y-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col space-y-4">
           <div>
-            <label className="block text-gray-600 text-sm font-medium mb-1">Email:</label>
             <input
               type="email"
-              value={email} // Bind the email input field
-              onChange={(e) => setEmail(e.target.value)} // Update email state
-              required
+              {...register("email")}
               className="w-full p-2 border rounded focus:ring focus:ring-blue-300"
+              placeholder="Email"
             />
+            {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
           </div>
 
-          <div>
-            <label className="block text-gray-600 text-sm font-medium mb-1">Password:</label>
+          <div className="relative">
             <input
-              type="password"
-              value={password} // Bind the password input field
-              onChange={(e) => setPassword(e.target.value)} // Update password state
-              required
+              type={showPassword ? "text" : "password"}
+              {...register("password")}
               className="w-full p-2 border rounded focus:ring focus:ring-blue-300"
+              placeholder="Password"
             />
+
+            <button
+              type="button"
+              onClick={togglePasswordVisibility}
+              className="absolute top-0.5 right-0.5 bottom-0.5 left-[87%] bg-white"
+            >
+              {showPassword ? (
+                <IoEyeOutline className="place-self-center" size={25} />
+              ) : (
+                <IoEyeOffOutline className="place-self-center" size={25} />
+              )}
+            </button>
           </div>
+          {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
 
           <div>
-            <label className="block text-gray-600 text-sm font-medium mb-1">Role:</label>
-            <select name="role" id="" className="border w-1/3 py-1 px-0.5 rounded-sm" value={role} onChange={(e) => setRole(e.target.value)}>
+            <select
+              {...register("role")}
+              className="border w-1/3 py-1 px-0.5 rounded-sm"
+            >
+              <option value="" disabled selected>Select Role</option>
               <option value="parent">Parent</option>
               <option value="teacher">Teacher</option>
               <option value="admin">Admin</option>
             </select>
+            {errors.role && <p className="text-red-500 text-sm">{errors.role.message}</p>}
           </div>
 
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition">
+            className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition"
+          >
             Login
           </button>
         </form>
+
         <div className="text-center mt-4">
           <p className="text-sm text-gray-600">
-            Don't have an account?{" "}
+            Don't have an account? {" "}
             <button
-              onClick={handleSignupRedirect}
+              onClick={() => navigate("/SignUp")}
               className="text-blue-500 hover:text-blue-600"
             >
               Sign Up
             </button>
           </p>
-          <BackButton data={{Title: "Back To Home", path: "../landing-page", width:"w-fit"}}/>
+          <BackButton data={{ Title: "Back To Home", path: "../landing-page", width: "w-fit" }} />
         </div>
       </div>
     </div>

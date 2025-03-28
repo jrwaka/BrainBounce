@@ -11,7 +11,6 @@ import {
 import Dashboard from "./components/Parent/Dashboard";
 import NotificationsPage from "./components/Parent/notificationsPage";
 import ProfilePage from "./components/Parent/parentProfilePage";
-import SignOutPage from "./components/Parent/signOutPage";
 import StudentProgressPage from "./components/Parent/studentProgressPage";
 // Teacher Components
 
@@ -28,29 +27,36 @@ import TeacherNotificationPage from "./components/Teacher/teacherNotificationsPa
 import TeacherProfilePage from "./components/Teacher/teacherProfilePage";
 import TeacherStudentProgress from "./components/Teacher/TeacherStudentProgressPage";
 import TrainerDashboard from "./components/Teacher/TrainerDashboard";
+<<<<<<< HEAD
 import AddChildProfile from "./pages/addChildProfile";
+=======
+>>>>>>> 5fdf2871bf42a3d1abd803701538d35e41099782
 import LandingPage from "./pages/landingPage";
 import ParentLogin from "./pages/Login";
 import ParentLandingPage from "./pages/parentLandingPage";
 import SignUp from "./pages/SignUp";
 import TeacherLandingPage from "./pages/teacherLandingPage";
 // Admin Components
+import { Toaster } from "react-hot-toast";
 import AdminDashboard from "./components/Admin/adminDashboard";
 import AdminLessonsSection from "./components/Admin/adminLessonsSection";
 import AdminProfileSection from "./components/Admin/adminProfileSection";
 import AdminProgress from "./components/Admin/adminProgress";
 import AdminWorkSpace from "./components/Admin/AdminWorkSpace";
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5fdf2871bf42a3d1abd803701538d35e41099782
 const App = () => {
   return (
     <Router>
+      <Toaster position="top-right" removeDelay={1000} />
       <Routes>
         {/* Redirect "/" to landing page */}
         <Route path="/" element={<Navigate to="/landing-page" />} />
         <Route path="/landing-page" element={<LandingPage />} />
         <Route path="/ParentLogin" element={<ParentLogin />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/add-child" element={<AddChildProfile />} />
         <Route path="/parent-landing-page" element={<ParentLandingPage />} />
         <Route path="/teacher-landing-page" element={<TeacherLandingPage />} />
 
@@ -61,7 +67,6 @@ const App = () => {
           <Route path="parent-profile" element={<ProfilePage />} />
           <Route path="student-progress" element={<StudentProgressPage />} />
           <Route path="notifications" element={<NotificationsPage />} />
-          <Route path="signout" element={<SignOutPage />} />
         </Route>
 
         {/* Teacher Dashboard Routes */}
@@ -72,7 +77,7 @@ const App = () => {
             path="teacherProfilePage"
             element={<TeacherProfilePage />}
           ></Route>
-          <Route path="TeacherSignOutPage" element={<SignOutPage />}></Route>
+
           <Route
             path="TeacherStudentProgressPages"
             element={<TeacherStudentProgress />}

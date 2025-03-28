@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useEffect } from "react";
 import { FiBarChart2, FiBell, FiBook, FiGrid, FiPower, FiUser } from "react-icons/fi";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import NavBar from "../small_component/navBar";
@@ -18,6 +18,20 @@ const TeacherDashboard = () => {
       { id: 2, message: "Product out of stock" },
     ],
   };
+
+  // useEffect(() => {
+  //   const currentUser = JSON.parse(sessionStorage.getItem("user"));
+  //   if (!currentUser || currentUser.role !== "teacher") {
+  //     toast.error("Unauthorized access! Redirecting...");
+  //     navigate("/landing-page", { replace: true });
+  //   }
+  // }, [navigate]);
+
+  // const handleSignOut = () => {
+  //   sessionStorage.removeItem("user");
+  //   toast.success("Signed out successfully!");
+  //   navigate("/landing-page", { replace: true });
+  // };
 
   const RegisteredStudent = [
     {
@@ -99,12 +113,12 @@ const TeacherDashboard = () => {
             </ul>
 
             <div className="mt-auto">
-              <Link
-                to="TeacherSignOutPage"
+              <button
+                // onClick={handleSignOut}
                 className="flex items-center hover:text-yellow-400"
               >
                 <FiPower className="mr-2" /> Sign Out
-              </Link>
+              </button>
             </div>
           </div>
         </div>
