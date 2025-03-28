@@ -27,6 +27,8 @@ import TeacherNotificationPage from "./components/Teacher/teacherNotificationsPa
 import TeacherProfilePage from "./components/Teacher/teacherProfilePage";
 import TeacherStudentProgress from "./components/Teacher/TeacherStudentProgressPage";
 import TrainerDashboard from "./components/Teacher/TrainerDashboard";
+
+
 import LandingPage from "./pages/landingPage";
 import ParentLogin from "./pages/Login";
 import ParentLandingPage from "./pages/parentLandingPage";
@@ -39,6 +41,7 @@ import AdminLessonsSection from "./components/Admin/adminLessonsSection";
 import AdminProfileSection from "./components/Admin/adminProfileSection";
 import AdminProgress from "./components/Admin/adminProgress";
 import AdminWorkSpace from "./components/Admin/AdminWorkSpace";
+
 const App = () => {
   return (
     <Router>
