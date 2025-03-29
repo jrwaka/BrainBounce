@@ -8,7 +8,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "server": "npx json-server --watch db.json --port 5173"
+    "server": "npx json-server --watch db.json --port 3001"
   },
   "dependencies": {
     "@hookform/resolvers": "^4.1.3",
