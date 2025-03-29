@@ -5,6 +5,7 @@ import { FaCheck } from "react-icons/fa6";
 import { FiBarChart2, FiGrid, FiPower, FiUser } from "react-icons/fi";
 import { IoSettingsSharp } from "react-icons/io5";
 import { Link, Outlet, useNavigate } from "react-router-dom";
+import ChatBox from "../small_component/chatBox";
 import NavBar from "../small_component/navBar";
 import NotificationsPage from "./notificationsPage";
 
@@ -23,6 +24,7 @@ const ParentDashboard = () => {
       navigate("/landing-page", { replace: true });
     }
   }, [navigate]);
+  useEffect(() => {}, [showChatBox]);
 
   const handleSignOut = () => {
     sessionStorage.removeItem("user");
@@ -126,6 +128,7 @@ const ParentDashboard = () => {
             {" "}
             <NavBar
               showNotification={toggleNotificationBox}
+              hiddingNotification={setShowNotification}
               showingChatBox={toggleChatBox}
               userData={userData}
             />
