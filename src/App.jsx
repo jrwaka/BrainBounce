@@ -28,7 +28,6 @@ import TeacherProfilePage from "./components/Teacher/teacherProfilePage";
 import TeacherStudentProgress from "./components/Teacher/TeacherStudentProgressPage";
 import TrainerDashboard from "./components/Teacher/TrainerDashboard";
 
-
 import LandingPage from "./pages/landingPage";
 import ParentLogin from "./pages/Login";
 import ParentLandingPage from "./pages/parentLandingPage";
@@ -61,7 +60,7 @@ const App = () => {
           <Route path="Dashboard" element={<Dashboard />} />
           <Route path="parent-profile" element={<ProfilePage />} />
           <Route path="student-progress" element={<StudentProgressPage />} />
-          <Route path="notifications" element={<NotificationsPage />} />
+          <Route path="notificationsPage" element={<NotificationsPage />} />
         </Route>
 
         {/* Teacher Dashboard Routes */}

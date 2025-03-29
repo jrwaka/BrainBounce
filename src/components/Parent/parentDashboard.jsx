@@ -1,14 +1,19 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { BiUpArrow } from "react-icons/bi";
+import { FaCheck } from "react-icons/fa6";
 import { FiBarChart2, FiGrid, FiPower, FiUser } from "react-icons/fi";
+import { IoSettingsSharp } from "react-icons/io5";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import ChatBox from "../small_component/chatBox";
 import NavBar from "../small_component/navBar";
+import NotificationsPage from "./notificationsPage";
 
 const UserContext = createContext();
 
 const ParentDashboard = () => {
   const [showChatBox, setShowChatBox] = useState(false);
+  const [showNotification, setShowNotification] = useState(true);
   const navigate = useNavigate();
 
   // Check user authentication
@@ -54,6 +59,9 @@ const ParentDashboard = () => {
 
   const toggleChatBox = () => {
     setShowChatBox((prevShowChatBox) => !prevShowChatBox);
+  };
+  const toggleNotificationBox = () => {
+    setShowNotification((prevState) => !prevState);
   };
 
   return (
@@ -111,8 +119,12 @@ const ParentDashboard = () => {
           </div>
         </div>
 
-        <div className="flex-1 p-6">
-          <NavBar showingChatBox={toggleChatBox} userData={userData} />
+        <div className="flex-1 mt-[81px] lg:ml-[16rem] ">
+          <NavBar
+            showNotification={toggleNotificationBox}
+            showingChatBox={toggleChatBox}
+            userData={userData}
+          />
           {showChatBox && (
             <div className="fixed flex border-t-2 border-blue-500 justify-center items-center bg-blue-300 left-[60%] right-2 overflow-hidden rounded-xl shadow-md shadow-gray-600 top-0">
               <div className="bg-white h-full w-full max-w-[50rem] rounded-xl overflow-hidden">
@@ -120,6 +132,41 @@ const ParentDashboard = () => {
               </div>
             </div>
           )}
+          {!showNotification && (
+            <div className="bg-white border-2 border-gray-300 fixed right-0 top-[68px] bottom-20 rounded p-2  flex flex-col w-[26rem]">
+              <div className="absolute pointer-events-none right-[86px] -top-[18px]">
+                <BiUpArrow fill="rgb(227 227 227)" size={23} />
+              </div>
+              {/* Open button */}
+              {/* <button
+                onClick={() => setShowNotification(false)}
+                className="bg-gray-600 text-white absolute top-0 left-0 overflow-hidden cursor-pointer"
+              >
+                <IoMdClose size={25} />
+              </button> */}
+              <div className=" flex justify-end gap-4 px-4 py-2">
+                <span className=" cursor-pointer">
+                  <IoSettingsSharp />
+                </span>
+                <span className=" cursor-pointer">
+                  <FaCheck />
+                </span>
+              </div>
+              <div className="flex-1">
+                <NotificationsPage />
+              </div>
+              <div className=" flex justify-end">
+                <Link
+                  onClick={() => setShowNotification(true)}
+                  to="notificationsPage"
+                  className="bg-blue-400 place-self-end rounded-sm px-2 py-1 text-white"
+                >
+                  View More
+                </Link>
+              </div>
+            </div>
+          )}
+
           <Outlet context={{ StudentList }} />
         </div>
       </div>
