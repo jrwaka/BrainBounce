@@ -2,7 +2,12 @@ import React from "react";
 import { FaRegMessage } from "react-icons/fa6";
 import { FiBell, FiMenu } from "react-icons/fi";
 import { Link } from "react-router-dom";
-function NavBar({ userData, showingChatBox, setIsSidebarOpen }) {
+function NavBar({
+  userData,
+  showingChatBox,
+  setIsSidebarOpen,
+  showNotification,
+}) {
   return (
     <div className="flex items-center gap-4 justify-between mb-2">
       <div>
@@ -28,7 +33,7 @@ function NavBar({ userData, showingChatBox, setIsSidebarOpen }) {
             </span>
           </button>
 
-          <button className="relative">
+          <button className="relative" onClick={showNotification}>
             <FiBell size={30} />{" "}
             <span className="border border-red-400 w-4 h-4 rounded-full absolute top-0 right-0 bg-amber-500 flex justify-center items-center p-1 text-[10px]">
               1
