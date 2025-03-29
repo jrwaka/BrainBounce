@@ -22,7 +22,7 @@ function AddCourse({ functionObjectData, stateObjectData }) {
 
     const newCourse = {
       title: data.courseTitle,
-      fileUrl: data.file[file.name], // Temporary file URL
+      fileUrl: data.file[[0].name], // Temporary file URL
     };
 
     console.log("New Course Data:", newCourse);

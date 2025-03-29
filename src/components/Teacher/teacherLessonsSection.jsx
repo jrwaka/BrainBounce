@@ -120,11 +120,9 @@ const TeacherLessonsSection = () => {
       )}
 
       <AddCourse 
-        stateObjectData={{ isModalOpen, lessons }} 
+        stateObjectData={{ isModalOpen: isModalOpen }} 
         functionObjectData={{ 
-          setIsModalOpen, 
-          setLessons,
-          fetchLessons // Pass the fetchLessons function to refresh after adding
+          setIsModalOpen: setIsModalOpen, 
         }} 
       />
     </div>
