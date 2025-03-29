@@ -24,6 +24,7 @@ const ParentDashboard = () => {
       navigate("/landing-page", { replace: true });
     }
   }, [navigate]);
+  useEffect(() => {}, [showChatBox]);
 
   const handleSignOut = () => {
     sessionStorage.removeItem("user");
@@ -119,14 +120,22 @@ const ParentDashboard = () => {
           </div>
         </div>
 
-        <div className="flex-1 mt-[81px] lg:ml-[16rem] ">
-          <NavBar
-            showNotification={toggleNotificationBox}
-            showingChatBox={toggleChatBox}
-            userData={userData}
-          />
+        <div className="flex-1 mt-[89px] lg:ml-[16rem] ">
+          <div
+            className=" fixed top-0 right-0 left-[16rem]  bg-white
+          "
+          >
+            {" "}
+            <NavBar
+              showNotification={toggleNotificationBox}
+              hiddingNotification={setShowNotification}
+              showingChatBox={toggleChatBox}
+              userData={userData}
+            />
+          </div>
+
           {showChatBox && (
-            <div className="fixed flex border-t-2 border-blue-500 justify-center items-center bg-blue-300 left-[60%] right-2 overflow-hidden rounded-xl shadow-md shadow-gray-600 top-0">
+            <div className="fixed flex border border-blue-500 justify-center items-center bg-blue-500 left-[60%] right-2 overflow-hidden rounded-xl shadow-md shadow-gray-600 top-0">
               <div className="bg-white h-full w-full max-w-[50rem] rounded-xl overflow-hidden">
                 <ChatBox hidingChatBox={toggleChatBox} />
               </div>
