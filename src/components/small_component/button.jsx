@@ -4,10 +4,11 @@ const Button = ({ buttonInformData }) => {
   return (
     <div>
       <button
+        style={{}}
+        onMouseEnter={`this.style.backgoundColor = ${buttonInformData.bgHovering}`}
         className={`
   ${buttonInformData.bgColor} 
   ${buttonInformData.textColor} 
-  hover:${buttonInformData.bgHovering} 
   hover:${buttonInformData.txHovering} 
   ${buttonInformData.duration} 
   px-6 py-3 rounded-lg 
