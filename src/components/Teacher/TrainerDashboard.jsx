@@ -9,7 +9,7 @@ function TrainerDashboard() {
 
   return (
     <>
-      <div className="flex pl-64 h-screen w-full">
+      <div className="flex lg:pl-64 h-screen w-full">
         <div className="flex-1">
           <div className="p-6 mx-auto bg-blue-100 rounded-lg shadow-lg">
             <h1 className="text-xl font-bold text-blue- mb-4">
