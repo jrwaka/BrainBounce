@@ -28,9 +28,6 @@ export default function LandingPage() {
                 value: "Sign Up",
                 bgColor: "bg-white",
                 textColor: "text-blue-950",
-                bgHovering: "bg-blue-950",
-                txHovering: "text-white",
-                duration: "duration-300",
               }}
             />
           </Link>
