@@ -47,21 +47,21 @@ const TeacherDashboard = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const shouldToggleSidebar = screenSize < 1024; // Toggle sidebar for screens smaller than laptops (1024px)
 
   return (
     <UserContext.Provider value={RegisteredStudent}>
       <div className="flex">
         {/* Sidebar */}
         <div
-          className={`w-64 fixed inset-y-0 left-0 h-full bg-black text-white p-6 flex flex-col justify-between transition-transform transform ${
-            shouldToggleSidebar && !isSidebarOpen ? "-translate-x-full" : "translate-x-0"
-          }`}
+        className={`fixed inset-y-0 left-0 h-full bg-[rgba(0,0,0,0.5)] text-white flex flex-col justify-between transition-transform transform md:w-fit w-full z-50   ${
+            screenSize < 768 && !isSidebarOpen ? "-translate-x-full" : "translate-x-0"
+          }` } onClick={() => setIsSidebarOpen(false)}
         >
+        <div className="w-64 h-full p-6 bg-black" onClick={(event)=> event.stopPropagation()}>
           {/* Menu Close Button */}
-          {shouldToggleSidebar && (
+          { screenSize < 768 && (
             <button
-              onClick={() => setIsSidebarOpen(false)}
+              onClick={() => (setIsSidebarOpen(false))}
               className="text-white p-2 self-end mb-6"
             >
               <FiX className="h-6 w-6" />
@@ -106,20 +106,13 @@ const TeacherDashboard = () => {
             </button>
           </div>
         </div>
+        </div>
 
         {/* Main Content */}
         <div className="flex-1 p-6">
           {/* Menu Button - Fixed When Scrolling */}
-          {shouldToggleSidebar && (
-            <button
-              onClick={() => setIsSidebarOpen(true)}
-              className="text-black p-4 fixed top-4 left-4 z-50 rounded-full"
-            >
-              <FiMenu className="h-6 w-6" />
-            </button>
-          )}
 
-          <NavBar userData={userData} />
+          <NavBar userData={userData} setIsSidebarOpen={setIsSidebarOpen} />
           <Outlet context={{ RegisteredStudent }} />
         </div>
       </div>
