@@ -5,7 +5,6 @@ const Button = ({ buttonInformData }) => {
     <div>
       <button
         style={{}}
-        onMouseEnter={`this.style.backgoundColor = ${buttonInformData.bgHovering}`}
         className={`
   ${buttonInformData.bgColor} 
   ${buttonInformData.textColor} 

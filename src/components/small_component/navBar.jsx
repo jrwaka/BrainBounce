@@ -10,9 +10,9 @@ function NavBar({
   hiddingNotification,
 }) {
   return (
-    <div className="flex items-center gap-4 justify-between mb-2">
+    <div className="flex items-center md:justify-between justify-around mb-2 gap-4">
       <div>
-        <div className="justify-start block">
+        <div className="justify-start block  md:ml-0  ml-4 ">
           {window.innerWidth <= 1024 && (
             <button
               onClick={() => setIsSidebarOpen(true)}
@@ -23,8 +23,8 @@ function NavBar({
           )}
         </div>
       </div>
-      <div className="flex justify-end items-center gap-4">
-        <span className="flex items-center gap-4">
+      <div className="flex md:justify-end items-center justify-evenly  flex-1 mr-4 md:mr-0 gap-4">
+        <span className="flex items-center md:gap-4  flex-4/10 md:flex-none justify-end gap-4">
           <Link to={"/parent-landing-page"}>Home</Link>
 
           <button
@@ -44,11 +44,11 @@ function NavBar({
             </span>
           </button>
         </span>
-        <div>
+        <div className="  md:flex-none  md:mr-0 flex flex-col justify-center items-center">
           <img
             src={userData.userImage}
             alt=""
-            className="w-14 h-14 rounded-full object-center object-cover"
+            className="md:w-14 md:h-14 w-10 h-10 rounded-full object-center object-cover"
           />
           <p className="font-semibold">{userData.userName}</p>
         </div>
