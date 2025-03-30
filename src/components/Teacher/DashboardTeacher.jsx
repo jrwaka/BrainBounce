@@ -54,12 +54,12 @@ const TeacherDashboard = () => {
         {/* Sidebar */}
         <div
         className={`fixed inset-y-0 left-0 h-full bg-[rgba(0,0,0,0.5)] text-white flex flex-col justify-between transition-transform transform md:w-fit w-full z-50   ${
-            screenSize < 768 && !isSidebarOpen ? "-translate-x-full" : "translate-x-0"
+            screenSize <= 1024 && !isSidebarOpen ? "-translate-x-full" : "translate-x-0"
           }` } onClick={() => setIsSidebarOpen(false)}
         >
         <div className="w-64 h-full p-6 bg-black" onClick={(event)=> event.stopPropagation()}>
           {/* Menu Close Button */}
-          { screenSize < 768 && (
+          { screenSize <= 1024 && (
             <button
               onClick={() => (setIsSidebarOpen(false))}
               className="text-white p-2 self-end mb-6"
@@ -100,7 +100,7 @@ const TeacherDashboard = () => {
           </ul>
 
           {/* Sign Out Button */}
-          <div className="mt-auto">
+          <div className="lg:mt-[22rem] mt-[18rem]">
             <button className="flex items-center hover:text-yellow-400">
               <FiPower className="mr-2" /> Sign Out
             </button>

@@ -13,7 +13,7 @@ function NavBar({
     <div className="flex items-center gap-4 justify-between mb-2">
       <div>
         <div className="justify-start block">
-          {window.innerWidth < 768 && (
+          {window.innerWidth <= 1024 && (
             <button
               onClick={() => setIsSidebarOpen(true)}
               className="text-black top-4 left-4 z-50 rounded-full"

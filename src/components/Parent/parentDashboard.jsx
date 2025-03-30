@@ -14,6 +14,8 @@ const UserContext = createContext();
 const ParentDashboard = () => {
   const [showChatBox, setShowChatBox] = useState(false);
   const [showNotification, setShowNotification] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  
   const navigate = useNavigate();
 
   // Check user authentication
@@ -131,6 +133,7 @@ const ParentDashboard = () => {
               hiddingNotification={setShowNotification}
               showingChatBox={toggleChatBox}
               userData={userData}
+              setIsSidebarOpen={setShowChatBox}
             />
           </div>
 
