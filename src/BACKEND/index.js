@@ -22,7 +22,7 @@ const connection_string = process.env.connection_string;
 /////////CORS OPTIONS ///////
 const corsOptions = {
   origin: "*", // Allow only requests from this origin
-  methods: "*", // Allow only these HTTP methods
+  methods: "GET, POST, PUT, DELETE, OPTIONS", // Allow only these HTTP methods
   allowedHeaders: ["Content-Type", "Authorization"], // Allow only these headers
 };
 
