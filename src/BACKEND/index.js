@@ -1,7 +1,7 @@
 //importing the dependences
 const express = require("express");
 const app = express();
-// const cors = require("cors");
+const cors = require("cors");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
@@ -12,9 +12,21 @@ const userRoute = require("./ROUTES/user.route")
 
 
 
+
+
+
 require("dotenv").config();
 const port = process.env.port;
 const connection_string = process.env.connection_string;
+
+/////////CORS OPTIONS ///////
+const corsOptions = {
+  origin: "*", // Allow only requests from this origin
+  methods: "*", // Allow only these HTTP methods
+  allowedHeaders: ["Content-Type", "Authorization"], // Allow only these headers
+};
+
+app.use(cors(corsOptions));
 
 app.use(express.json());
 

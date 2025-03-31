@@ -1,12 +1,23 @@
 const mongoose = require("mongoose");
 
 const childSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  age: Number,
-  grade : {
-    type: String,
-    required: true
+  firstName: { type: String, required: true },
+  lastName: {
+    type: string,
+    required:true
   },
+
+  grade: {
+    type: String,
+    required: true,
+  },
+  parent: {
+    type :mongoose.Schema.Types.ObjectId,
+    ref: "User"
+  }
+  ,
+  age: { type: Number, required: true },
+  profilePicture: { type:String, default : null },
   courses: [
     {
       type: mongoose.Schema.Types.ObjectId,

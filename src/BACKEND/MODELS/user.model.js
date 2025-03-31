@@ -12,6 +12,11 @@ const userSchema = new mongoose.Schema(
       enum: ["Parent", "Teacher", "Admin"],
       required: true,
     },
+    grade: {
+      type: String,
+      default: null,
+      required: true
+    },
   },
   { timestamps: true }
 );
