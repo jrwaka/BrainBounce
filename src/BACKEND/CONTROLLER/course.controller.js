@@ -27,7 +27,7 @@ const uploadCourse = async (req, res) => {
     // Process lesson files
     const lessons = await Promise.all(
       req.files.map(async (file, index) => {
-        // Upload to Cloudinary
+        // Upload to Cloudinary 
         const result = await cloudinary.uploader.upload(file.path, {
           resource_type: "auto",
         });
@@ -82,7 +82,6 @@ const downloadCourse = async (req, res) => {
 };
 
 module.exports = {
-  upload,
   uploadCourse,
   downloadCourse,
 };
