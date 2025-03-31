@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema(
     grade: {
       type: String,
       default: null,
-      required: function () {
+      required : function () {
         return this.role === "Teacher";
       },
     },
