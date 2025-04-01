@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 
 const AddChildProfile = ({closeForm, formState}) => {
-  const [childName, setChildName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [childAge, setChildAge] = useState("");
   const [grade, setGrade] = useState("");
   const [childPhoto, setChildPhoto] = useState("");
@@ -13,7 +14,7 @@ const AddChildProfile = ({closeForm, formState}) => {
     setError(""); // Reset any previous errors
 
     // Simple validation for required fields
-    if (!childName || !grade) {
+    if (!firstName || !grade) {
       setError("All fields are required!");
       return;
     }
@@ -35,15 +36,27 @@ const AddChildProfile = ({closeForm, formState}) => {
         {error && <p className="text-red-500 text-sm text-center mb-4">{error}</p>}
         <form onSubmit={handleAddChildProfile} className="flex flex-col space-y-4">
           <div>
-            <label className="block text-gray-600 text-sm font-medium mb-1">Child Name:</label>
+            <label className="block text-gray-600 text-sm font-medium mb-1">First Name:</label>
             <input
               type="text"
-              value={childName}
-              onChange={(e) => setChildName(e.target.value)}
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
               required
               className="w-full p-2 border rounded focus:ring focus:ring-blue-300"
             />
           </div>
+
+          <div>
+            <label className="block text-gray-600 text-sm font-medium mb-1">Last Name:</label>
+            <input
+              type="text"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              required
+              className="w-full p-2 border rounded focus:ring focus:ring-blue-300"
+            />
+          </div>
+
           <div>
             <label className="block text-gray-600 text-sm font-medium mb-1">Child Age:</label>
             <input

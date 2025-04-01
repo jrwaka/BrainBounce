@@ -40,49 +40,7 @@ export default function ParentLandingPage() {
         </div>
       </section>
 
-      {/* Quick Access Buttons */}
-      <section className="py-16 px-6 text-center bg-gray-200">
-        <h2 className="text-3xl font-semibold">Quick Actions</h2>
-        <div className="mt-8 flex lg:flex-row flex-col justify-center gap-6">
-          <button className="bg-blue-600 hover:bg-blue-800 duration-150 text-white px-6 py-3 rounded-lg">Assign New Lesson</button>
-          <button className="bg-green-600 hover:bg-green-700 duration-150 text-white px-6 py-3 rounded-lg">View Progress</button>
-          <button className="bg-yellow-600 hover:bg-yellow-500 text-white px-6 py-3 rounded-lg">Set Learning Goals</button>
-        </div>
-      </section>
-
-      {/* Child Profile Summary */}
-      <section className="py-16 px-6 text-center">
-        <h2 className="text-3xl font-semibold">Child Profile</h2>
-        <div className="mt-8 bg-white shadow-md rounded-xl p-6">
-          <h3 className="text-xl font-semibold">Name: [Child’s Name]</h3>
-          <p className="mt-2 text-gray-600">Current Level: Grade [X]</p>
-          <p className="mt-2 text-gray-600">Lessons Completed: [X] / [Total Lessons]</p>
-          <p className="mt-2 text-gray-600">Last Lesson: [Lesson Name]</p>
-          <p className="mt-4 text-gray-600">Progress: [Percentage]%</p>
-        </div>
-      </section>
-
-      {/* Progress & Activity Feed */}
-      <section className="py-16 px-6 text-center bg-gray-100">
-        <h2 className="text-3xl font-semibold">Activity Feed</h2>
-        <div className="mt-8 bg-white shadow-md rounded-xl p-6">
-          <div className="mb-4">
-            <h3 className="text-xl font-semibold">March 19, 2025</h3>
-            <p className="mt-2 text-gray-600">Completed Lesson: [Lesson Name]</p>
-          </div>
-          <div>
-            <h3 className="text-xl font-semibold">March 18, 2025</h3>
-            <p className="mt-2 text-gray-600">Achieved Goal: [Goal Name]</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Call to Action (CTA) */}
-      <section className="text-center py-16">
-        <h2 className="text-3xl font-semibold">Ready to Get Started?</h2>
-        <button className="mt-6 bg-blue-600 hover:bg-blue-800 duration-150 text-white px-6 py-3 rounded-lg">Assign New Lesson</button>
-      </section>
-
+=
       {/* Footer */}
       <footer className="bg-gray-900 text-white text-center py-6">
         <p>&copy; 2025 BrainBounce. All rights reserved.</p>

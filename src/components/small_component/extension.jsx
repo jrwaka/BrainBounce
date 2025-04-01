@@ -268,7 +268,7 @@ const TiptapEditor = () => {
       TableHeader,
       TableCell,
     ],
-    content: '<h2>Welcome to the TipTap Rich Text Editor!</h2><p>This is a fully-featured text editor with support for formatting, alignment, tables, and more.</p>',
+    content: '<h2>Start typing...</p>',
   });
 
   return (
