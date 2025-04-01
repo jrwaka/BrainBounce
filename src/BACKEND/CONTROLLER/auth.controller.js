@@ -47,6 +47,7 @@ const signIn = async (req, res) => {
     ////comparing the passwords
     const userId = users._id.toString();
     const role = users.role;
+    const name = users.firstName
     
 
     const isMatch = await bcrypt.compare(password, users.password);
@@ -55,7 +56,7 @@ const signIn = async (req, res) => {
       res.status(400).json({ message: "Incorrect credentials" });
     } else {
       const token = jwt.sign(
-        { email: email, userId , role:role},
+        { email: email, userId , role:role, firstName:name},
         process.env.ACCESS_TOKEN_SECRET,
         {
           expiresIn: "1h",
