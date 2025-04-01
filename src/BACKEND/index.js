@@ -9,6 +9,7 @@ const authRoute = require("./ROUTES/auth.route")
 const courseRoute = require("./ROUTES/course.route")
 const dashboardRoute = require("./ROUTES/dashboard.routes")
 const userRoute = require("./ROUTES/user.route")
+const childRoute = require("./ROUTES/child.route")
 
 
 
@@ -39,6 +40,7 @@ app.use("/api", authRoute);
 app.use("/api", courseRoute);
 app.use("/api", dashboardRoute);
 app.use("/api", userRoute);
+app.use("/api", childRoute);
 
 mongoose
   .connect(connection_string)

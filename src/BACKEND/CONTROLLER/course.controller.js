@@ -1,51 +1,79 @@
 const cloudinary = require("cloudinary").v2;
 const multer = require("multer");
-const storage = multer.diskStorage({});
-const upload = multer({ storage });
-const {course} = require("../MODELS/course.model")
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
+const { course } = require("../MODELS/course.model");
+const { child } = require("../MODELS/child.model");
+const { User } = require("../MODELS/user.model");
 
 require("dotenv").config();
 
-cloudinary.config({ 
+cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype !== "application/pdf") {
+    return cb(new Error("Only PDF files are allowed!"), false);
+  }
+  cb(null, true);
+};
+
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: "uploads", // Cloudinary folder name
+    // format: async (req, file) => "png", // Convert all to PNG (optional)
+    public_id: (req, file) => file.originalname.split(".")[0],
+  },
+});
+
+const upload = multer({
+  storage: storage,
+  fileFilter: fileFilter,
+  limits: { fileSize: 40 * 1024 * 1024 },
+});
 
 const uploadCourse = async (req, res) => {
   try {
     const { courseName, teacherId, grade } = req.body;
 
     // Check if files are uploaded
-    if (!req.files || req.files.length === 0) {
+    if (!req.file) {
       return res
         .status(400)
-        .json({ message: "At least one lesson file is required" });
+        .json({ message: "A course file is required" });
     }
 
-    // Process lesson files
-    const lessons = await Promise.all(
-      req.files.map(async (file, index) => {
-        // Upload to Cloudinary 
-        const result = await cloudinary.uploader.upload(file.path, {
-          resource_type: "auto",
-        });
+    ////Upload to Cloudinary
+       const result = await cloudinary.uploader.upload(req.file.path, {
+         resource_type: "auto", // Automatically determine the resource type (image, pdf, etc.)
+       });
+    let lessonLink = result.secure_url; // Cloudinary URL
+    // // Process lesson files
+    // const lessons = await Promise.all(
+    //   req.files.map(async (file, index) => {
+    //     // Upload to Cloudinary
+    //     const result = await cloudinary.uploader.upload(file.path, {
+    //       resource_type: "auto",
+    //     });
 
-        return {
-          lessonTitle: req.body[`lessonTitle${index}`], // Get lesson title from request
-          lessonLink: result.secure_url, // Cloudinary URL
-          exercise: req.body[`exercise${index}`], // Exercise from request
-        };
-      })
-    );
+    //     return {
+    //       lessonTitle: req.body[`lessonTitle${index}`], // Get lesson title from request
+    //       lessonLink: result.secure_url, // Cloudinary URL
+    //       exercise: req.body[`exercise${index}`], // Exercise from request
+    //     };
+    //   })
+    // );
 
     // Create course
     const newCourse = new course({
       courseName,
       teacherId,
       grade,
-      lessons,
+      courseLink: lessonLink,
+      // lessons,
     });
 
     await newCourse.save();
@@ -63,17 +91,26 @@ const uploadCourse = async (req, res) => {
 
 const downloadCourse = async (req, res) => {
   try {
-    const { public_id } = req.query; // Get public_id from request
+    const courseLink = req.body.courseLink
+    if (!courseLink) { return res.status(400).json({message:"courseLink is required"})}
 
-    if (!public_id) {
-      return res.status(400).json({ error: "Public ID is required" });
+    function getPublicId(courseLink) {
+      const regex = /\/upload\/(?:v\d+\/)?([^?]+)/;
+      const match = courseLink.match(regex);
+      return match ? match[1].replace(/\.[^/.]+$/, "") : null;
     }
 
-  
+    let public_id  = getPublicId(courseLink)
+   console.log(public_id)
+    if (!public_id) {
+      return res.status(400).json({ error: "Public ID is missing" });
+    }
+
     const fileUrl = cloudinary.url(public_id, {
-      resource_type: "raw", 
-      secure: true, 
+      resource_type: "raw",
+      secure: true,
     });
+    console.log(fileUrl)
 
     res.json({ download_url: fileUrl });
   } catch (error) {
@@ -81,7 +118,125 @@ const downloadCourse = async (req, res) => {
   }
 };
 
+const enrollCourse = async (req, res) => {
+  const { childId, courseId } = req.body;
+
+  try {
+    // Find the child
+    const childRecord = await Child.findById(childId);
+    if (!childRecord) {
+      return res.status(404).json({ message: "Child not found" });
+    }
+
+    // Check if the child is already enrolled in the course
+    if (childRecord.courses.includes(courseId)) {
+      return res
+        .status(400)
+        .json({ message: "Child is already enrolled in this course" });
+    }
+
+    // Enroll the child in the course
+    childRecord.courses.push(courseId);
+    await childRecord.save();
+
+    // Get the parent's information to send a notification
+    const parent = await User.findById(childRecord.parent);
+    if (parent) {
+      sendNotification(
+        parent.email,
+        "Enrollment Successful",
+        `Your child ${childRecord.firstName} has been enrolled in a new course!`
+      );
+    }
+
+    return res
+      .status(200)
+      .json({ message: "Course enrolled successfully", child: childRecord });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Error enrolling child in course",
+      error: error.message,
+    });
+  }
+};
+
+const getCourses = async (req, res) => {
+  try {
+    const Courses = await course.find();
+
+    res.status(200).json(Courses);
+  } catch (error) {}
+};
+const getCourse = async (req, res) => {
+  try {
+   
+    const id = req.params.id;
+
+    if (!id) {
+      return res.status(404).json("CourseId is missing");
+    }
+    const Course = await course.findById(id);
+
+    if (!Course) {return res.status(404).json("Course is not found");}
+    res.status(200).json(Course.courseLink);
+
+    
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+const updateCourse = async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    if (!id) {
+      return res.status(404).json("Course Id not found");
+    }
+    const Course = await course.findByIdAndUpdate(id, req.body);
+    if (!Course) {
+      return res.status(404).json("Course not found");
+    } else {
+      res.status(200).json("Course updated");
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const deleteCourse = async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!id) {
+      return res.status(404).json(" courseId not found");
+    }
+
+    let item = await course.findById(id);
+    let courseUrl = item.courseLink;
+
+   
+    function getPublicId(courseUrl) {
+      const regex = /\/upload\/(?:v\d+\/)?([^?]+)/;
+      const match = courseUrl.match(regex);
+      return match ? match[1].replace(/\.[^/.]+$/, "") : null;
+    }
+
+    let publicId = getPublicId(courseUrl);
+    console.log(publicId);
+    ///////////////////////////////////////////////////////////////////////
+    const result = await cloudinary.uploader.destroy(publicId);
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    const Course = await course.findByIdAndDelete(id);
+
+    res.status(200).json({ message: "Course deleted successfully!" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 module.exports = {
   uploadCourse,
   downloadCourse,
+  getCourses,
+  getCourse,
+  updateCourse,
+  deleteCourse
 };
