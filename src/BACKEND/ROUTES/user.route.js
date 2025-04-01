@@ -6,10 +6,19 @@ const roles = require("../CONFIG/role.config");
 const { protect } = require("../Middlewares/auth.middleware");
 const { authorize } = require("../Middlewares/roles.middleware");
 
-const { getUsers, getUser } = require("../CONTROLLER/user.controller");
+const {
+  getUsers,
+  getUser,
+  deleteUser,
+  getTeachers,
+  getTeachersByGrade,
+} = require("../CONTROLLER/user.controller");
 
 
 router.get("/users",protect,authorize("getUsers"), getUsers);
 router.get("/users/:id",protect,authorize("getUser"),getUser);
+router.delete("/users/:id", protect, authorize("deleteUser"), deleteUser);
+router.get("/users/Teachers", protect, authorize("getTeachers"), getTeachers);
+router.get("/users/Teachers/grade", protect, authorize("getTeachersByGrade"), getTeachersByGrade);
 
 module.exports = router

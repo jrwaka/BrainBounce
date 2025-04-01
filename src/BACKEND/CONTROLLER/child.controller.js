@@ -1,5 +1,16 @@
 const { child } = require("../MODELS/child.model")
+const cloudinary = require("cloudinary").v2;
+const multer = require("multer");
+const storage = multer.diskStorage({});
+const upload = multer({ storage });
 
+require("dotenv").config();
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 const addChild = async (req, res) => {
   try {
     /////////////////CLOUDINARY CONTROLLER//////////
@@ -11,7 +22,9 @@ const addChild = async (req, res) => {
 
    
     const Child = new child({
-      childName: req.body.productName,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      parentId:req.body.parentId,
       grade: req.body.grade,
       age: req.body.age,
       profilePicture: secure_url,
@@ -40,13 +53,13 @@ const getChildren = async (req, res) => {
   }
 };
 
-const getchild = async (req, res) => {
+const getChild = async (req, res) => {
   try {
-
-    const Child = await child.findById();
+    const id = req.params.id
+    const Child = await child.findById(id);
 
     res.status(200).json(Child);
   } catch (error) {}
 };
 
-module.exports= { addChild, getChildren}
+module.exports= { addChild, getChildren, getChild}

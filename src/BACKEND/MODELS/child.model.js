@@ -2,16 +2,13 @@ const mongoose = require("mongoose");
 
 const childSchema = new mongoose.Schema({
   firstName: { type: String, required: true },
-  lastName: {
-    type: string,
-    required:true
-  },
+  lastName:{ type: String, required : true}, 
 
   grade: {
     type: String,
     required: true,
   },
-  parent: {
+  parentId: {
     type :mongoose.Schema.Types.ObjectId,
     ref: "User"
   }
@@ -25,7 +22,7 @@ const childSchema = new mongoose.Schema({
     },
   ],
   progress: [
-    {
+    {  
       type: mongoose.Schema.Types.ObjectId,
       ref: "Progress",
     },
