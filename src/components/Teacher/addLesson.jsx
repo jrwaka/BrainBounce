@@ -1,9 +1,8 @@
-import Toolbar from "quill/modules/toolbar";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { createEditor } from "slate";
-import { Slate, Editable, withReact } from "slate-react";
-import TiptapEditor from "../small_component/extension";
+import { withReact } from "slate-react";
+import Example from "./textingEditor";
 
 const ToolbarEditor = () => {
   const [editor] = useState(() => withReact(createEditor()));
@@ -21,11 +20,8 @@ const ToolbarEditor = () => {
   };
 
   return (
-    <div className="p-4 w-full max-w-2xl mx-auto mt-10">
-      <div>
-        
-        <TiptapEditor />
-      </div>
+    <div className=" w-full  mt-10 ">
+      <Example />
     </div>
   );
 };
@@ -58,7 +54,11 @@ const LessonForm = () => {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 p-4 w-full ">
       <label className="block">
         Title:
-        <input type="text" {...register("title", { required: true })} className="border p-2 w-full" />
+        <input
+          type="text"
+          {...register("title", { required: true })}
+          className="border p-2 w-full"
+        />
       </label>
 
       <label className="block">
@@ -85,7 +85,10 @@ const LessonForm = () => {
         </label>
       )}
 
-      <button type="submit" className="bg-blue-500 text-white p-2 rounded w-full">
+      <button
+        type="submit"
+        className="bg-blue-500 text-white p-2 rounded w-full"
+      >
         Submit
       </button>
     </form>
