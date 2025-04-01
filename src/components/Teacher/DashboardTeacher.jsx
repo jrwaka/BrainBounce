@@ -21,7 +21,7 @@ const TeacherDashboard = () => {
   // ✅ Role-based access control for "teacher"
   useEffect(() => {
     const currentUser = JSON.parse(sessionStorage.getItem("user"));
-    if (!currentUser || currentUser.role !== "teacher") {
+    if (!currentUser) {
       // ✅ Fix: Check "teacher" role
       toast.error("Unauthorized access! Redirecting...");
       navigate("/landing-page", { replace: true });
@@ -159,7 +159,7 @@ const TeacherDashboard = () => {
         </div>
 
         {/* Main Content */}
-        <div className="flex-1 md:p-6">
+        <div className="flex-1 ml-64 md:p-6">
           <NavBar userData={userData} setIsSidebarOpen={setIsSidebarOpen} />
           <Outlet context={{ RegisteredStudent }} />
         </div>

@@ -4,6 +4,7 @@ const AddChildProfile = ({closeForm, formState}) => {
   const [childName, setChildName] = useState("");
   const [childAge, setChildAge] = useState("");
   const [grade, setGrade] = useState("");
+  const [childPhoto, setChildPhoto] = useState("");
   const [error, setError] = useState("");
 
   // Handle form submission
@@ -71,6 +72,17 @@ const AddChildProfile = ({closeForm, formState}) => {
               <option value="Grade 6">Primary 6</option>
             </select>
           </div>
+
+          <div>
+            <label className="block text-gray-600 text-sm font-medium mb-1">Child Photo:</label>
+            <input
+              type="file"
+              value={childPhoto}
+              onChange={(e) => setChildPhoto(e.target.value)}
+              className="w-full p-2 border rounded focus:ring focus:ring-blue-300"
+            />
+          </div>
+
           <div className="flex justify-between gap-5">
           <button
             type="submit"

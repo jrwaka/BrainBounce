@@ -7,9 +7,9 @@ const TeacherProfilePage = () => {
   const [email, setEmail] = useState("johndoe@example.com");
 
   return (
-    <div className="min-h-screen bg-gray-100 text-gray-900 flex flex-col items-center p-6 pl-64">
+    <div className="h-full text-gray-900 flex flex-col items-center">
       {/* Profile Header */}
-      <div className="w-full max-w-3xl bg-white shadow-md rounded-xl p-6 text-center">
+      <div className="bg-white shadow-lg rounded-xl text-center mt-10 p-12">
         <div className="flex flex-col items-center">
           <div className="w-24 h-24 bg-gray-300 rounded-full flex items-center justify-center text-4xl">
             <FaUser className="text-gray-600" />

@@ -21,7 +21,7 @@ const ParentDashboard = () => {
   // Check user authentication
   useEffect(() => {
     const currentUser = JSON.parse(sessionStorage.getItem("user"));
-    if (!currentUser || currentUser.role !== "parent") {
+    if (!currentUser) {
       toast.error("Unauthorized access! Redirecting...");
       navigate("/landing-page", { replace: true });
     }

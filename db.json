@@ -1,18 +1,3 @@
 {
-  "courses": [
-    {
-      "id": "2df1",
-      "title": "Math",
-      "fileUrl": "Mathematics  SB (1).pdf",
-      "createdAt": "2025-03-28T21:34:15.680Z"
-    },
-    {
-      "id": "ce50",
-      "title": "ftyghuji"
-    },
-    {
-      "id": "c265",
-      "title": "pqa"
-    }
-  ]
+  "courses": []
 }
