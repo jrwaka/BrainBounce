@@ -33,6 +33,7 @@ const roles = {
     "getTeachers",
     "getTeacher",
     "getChildren",
+    "getParentChildren",
     "getChild",
     "getTeacherByGrade",
     "addChild",
