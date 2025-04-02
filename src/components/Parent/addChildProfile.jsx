@@ -36,6 +36,7 @@ const AddChildProfile = ({ closeForm }) => {
       formData.append("grade", data.grade);
       formData.append("parentId", userID);
       formData.append("profilePicture", data.childPhoto[0]); // Append the file
+    
   
       // Debugging formData
       console.log("FormData Content:");
@@ -109,12 +110,12 @@ const AddChildProfile = ({ closeForm }) => {
             className="w-full p-2 border rounded focus:ring focus:ring-blue-300"
           >
             <option value="">Select Grade</option>
-            <option value="Grade 1">Primary 1</option>
-            <option value="Grade 2">Primary 2</option>
-            <option value="Grade 3">Primary 3</option>
-            <option value="Grade 4">Primary 4</option>
-            <option value="Grade 5">Primary 5</option>
-            <option value="Grade 6">Primary 6</option>
+            <option value="Primary 1">Primary 1</option>
+            <option value="Primary 2">Primary 2</option>
+            <option value="Primary 3">Primary 3</option>
+            <option value="Primary 4">Primary 4</option>
+            <option value="Primary 5">Primary 5</option>
+            <option value="Primary 6">Primary 6</option>
           </select>
           {errors.grade && <p className="text-red-500 text-sm">{errors.grade.message}</p>}
         </div>

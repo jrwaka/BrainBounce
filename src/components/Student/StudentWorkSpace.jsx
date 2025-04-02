@@ -9,12 +9,12 @@ const StudentWorkSpace = () => {
       <div className="w-full bg-slate-300 flex-1">
         <div className="max-w-4xl mx-auto bg-blue-100 rounded-lg shadow-lg">
           {/* Welcome Message */}
-          <CourseNavBar />
+          
           <h1 className="text-xl font-bold text-blue- mb-4">
             Hi, [Student's Name]! 🎈 Are you ready for a new adventure today? 🚀
           </h1>
 
-
+        <h1> Hello workspace</h1>
           
         </div>
       </div>

@@ -12,8 +12,8 @@ function Dashboard() {
   const [userName, setUserName] = useState("");
 
   const navigate = useNavigate();
-  const navigateToLink = () => {
-    navigate("/studentDashboard");
+  const navigateToLink = (grade) => {
+    navigate(`/studentDashboard/StudentWorkSpace?${grade}`);
   };
 
   const gettingUserId = () => {
@@ -98,7 +98,7 @@ function Dashboard() {
                         <td className="p-3">{child.grade}</td>
                         <td className="p-3 flex justify-center gap-2">
                           <button
-                            onClick={navigateToLink}
+                            onClick={() => navigateToLink(child.grade)}
                             className="bg-blue-600 text-white font-medium py-1 px-3 rounded-md shadow-md hover:bg-blue-700 transition"
                           >
                             Go To Workspace

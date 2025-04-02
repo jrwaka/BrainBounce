@@ -34,14 +34,6 @@ const ParentDashboard = () => {
     navigate("/landing-page", { replace: true });
   };
 
-  const userData = {
-    userName: "John Doe",
-    userImage: "/src/assets/Profile_Images/1.jpeg",
-    notifications: [
-      { id: 1, message: "New order received" },
-      { id: 2, message: "Product out of stock" },
-    ],
-  };
 
   const StudentList = [
     {
@@ -60,12 +52,6 @@ const ParentDashboard = () => {
     },
   ];
 
-  const toggleChatBox = () => {
-    setShowChatBox((prevShowChatBox) => !prevShowChatBox);
-  };
-  const toggleNotificationBox = () => {
-    setShowNotification((prevState) => !prevState);
-  };
 
   return (
     <UserContext.Provider value={StudentList}>
@@ -123,27 +109,7 @@ const ParentDashboard = () => {
         </div>
 
         <div className="flex-1 mt-[89px] lg:ml-[16rem] ">
-          <div
-            className=" fixed top-0 right-0 left-[16rem]  bg-white
-          "
-          >
-            {" "}
-            <NavBar
-              showNotification={toggleNotificationBox}
-              hiddingNotification={setShowNotification}
-              showingChatBox={toggleChatBox}
-              userData={userData}
-              setIsSidebarOpen={setShowChatBox}
-            />
-          </div>
-
-          {showChatBox && (
-            <div className="fixed flex border border-blue-500 justify-center items-center bg-blue-500 left-[60%] right-2 overflow-hidden rounded-xl shadow-md shadow-gray-600 top-0">
-              <div className="bg-white h-full w-full max-w-[50rem] rounded-xl overflow-hidden">
-                <ChatBox hidingChatBox={toggleChatBox} />
-              </div>
-            </div>
-          )}
+          
           {!showNotification && (
             <div className="bg-white border-2 border-gray-300 fixed right-0 top-[68px] bottom-20 rounded p-2  flex flex-col w-[26rem]">
               <div className="absolute pointer-events-none right-[86px] -top-[18px]">

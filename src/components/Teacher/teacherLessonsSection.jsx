@@ -15,19 +15,26 @@ const TeacherLessonsSection = () => {
   const [refresh, setRefresh] = useState(false);
   const [showForm, setShowForm] = useState(false);
 
+  const token = JSON.parse(sessionStorage.getItem("user"));
+      if (!token) throw new Error("No token found");
+
+      const decoded = jwtDecode(token);
+      const userId = decoded.userId; // Ensure this matches your token structure
+
   useEffect(() => {
-    fetchLessons();
+    fetchLessons(userId);
   }, [refresh]);
 
-  const token = JSON.parse(sessionStorage.getItem("user"));
-  const fetchLessons = async () => {
+  const fetchLessons = async (id) => {
     setIsLoading(true);
     try {
-      const response = await axios.get("https://brainbounce.onrender.com/api/getCourses", 
+      const response = await axios.get(`https://brainbounce.onrender.com/api/getCourses/${id}`, 
         {
           headers: {
             Authorization: `Bearer ${token}`, // Include the token
-            "Content-Type": "multipart/form-data", } });
+          }
+         }
+        );
       setLessons(response.data);
     } catch (error) {
       toast.error("Failed to fetch courses");
@@ -42,11 +49,6 @@ const TeacherLessonsSection = () => {
 
   const onSubmit = async (data) => {
     try {
-      const token = JSON.parse(sessionStorage.getItem("user"));
-      if (!token) throw new Error("No token found");
-
-      const decoded = jwtDecode(token);
-      const userId = decoded.userId; // Ensure this matches your token structure
 
       // Construct FormData
       const formData = new FormData();
@@ -139,7 +141,7 @@ const TeacherLessonsSection = () => {
           "Content-Type": "multipart/form-data", } });
           
       toast.success("Course deleted successfully");
-      fetchLessons();
+      fetchLessons(userId);
     } catch (error) {
       toast.error("Failed to delete course");
     }
@@ -159,12 +161,12 @@ const TeacherLessonsSection = () => {
             <IoAddOutline className="mr-2" /> Add Course
           </button>
 
-          <Link 
+          {/* <Link 
             to="../addLesson" 
             className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
           >
             <IoAddOutline className="mr-2" /> Add Lesson
-          </Link>
+          </Link> */}
         </div>
 
       </div>
