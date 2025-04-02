@@ -4,34 +4,16 @@ import { createEditor } from "slate";
 import { withReact } from "slate-react";
 import Example from "./textingEditor";
 
-const ToolbarEditor = () => {
-  const [editor] = useState(() => withReact(createEditor()));
-  const [value, setValue] = useState([
-    {
-      type: "paragraph",
-      children: [{ text: "Start typing..." }],
-    },
-  ]);
-
-  const handleSave = () => {
-    const content = JSON.stringify(value); // Save the content as a string
-    setContent(content);
-    console.log("Saved Content:", content);
-  };
-
-  return (
-    <div className=" w-full  mt-10 ">
-      <Example />
-    </div>
-  );
-};
 
 const LessonForm = () => {
   const { register, handleSubmit, watch } = useForm();
   const [videoFile, setVideoFile] = useState(null);
-  const [content, setContent] = useState(""); // State for storing content from TextEditor
+  const [content, GetContent] = useState(""); // State for storing content from TextEditor
   const lessonType = watch("lessonType", "text");
 
+  const handleGettingContent = (newContent) => {
+    GetContent(newContent);
+  }
   const onSubmit = (data) => {
     const formData = new FormData();
     formData.append("title", data.title);
@@ -70,7 +52,7 @@ const LessonForm = () => {
       </label>
 
       {lessonType === "text" && (
-        <ToolbarEditor setContent={setContent} /> // Integrate the TextEditor here
+        <Example GetContent={handleGettingContent} /> // Integrate the TextEditor here
       )}
 
       {lessonType === "video" && (

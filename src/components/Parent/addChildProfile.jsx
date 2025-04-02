@@ -1,116 +1,157 @@
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import axios from "axios";
+import { jwtDecode } from "jwt-decode";
+import toast from "react-hot-toast";
 
-const AddChildProfile = ({closeForm, formState}) => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [childAge, setChildAge] = useState("");
-  const [grade, setGrade] = useState("");
-  const [childPhoto, setChildPhoto] = useState("");
-  const [error, setError] = useState("");
+const AddChildProfile = ({ closeForm }) => {
 
-  // Handle form submission
-  const handleAddChildProfile = (e) => {
-    e.preventDefault();
-    setError(""); // Reset any previous errors
+  const [hideForm, setHideForm] = useState(true);
 
-    // Simple validation for required fields
-    if (!firstName || !grade) {
-      setError("All fields are required!");
-      return;
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm();
+
+  const handleCloseForm = (stateForm) => {
+    setHideForm(stateForm);
+  }
+  const onSubmit = async (data) => {
+    try {
+      const token = JSON.parse(sessionStorage.getItem("user"));
+      const tokenDecoded = token ? jwtDecode(token) : null;
+      const userID = tokenDecoded ? tokenDecoded.userId : null;
+  
+      if (!token) {
+        console.error("No token found.");
+        return; // Stop execution if no token
+      }
+  
+      const formData = new FormData();
+      formData.append("firstName", data.firstName);
+      formData.append("lastName", data.lastName);
+      formData.append("age", data.childAge);
+      formData.append("grade", data.grade);
+      formData.append("parentId", userID);
+      formData.append("profilePicture", data.childPhoto[0]); // Append the file
+  
+      // Debugging formData
+      console.log("FormData Content:");
+      for (let [key, value] of formData.entries()) {
+        console.log(`${key}:`, value);
+      }
+  
+      const response = await axios.post(
+        "https://brainbounce.onrender.com/api/addChild",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include the token
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+  
+      toast.success("Child Profile Added Successfully!");
+      reset();
+      handleCloseForm(false);
+    } catch (error) {
+      console.error("Error adding child profile:", error);
+      toast.error("Failed to add child profile");
     }
-
-    // Proceed with the logic to save the child's profile (You can add Firebase logic here)
-    alert("Child Profile Added Successfully!");
-    // Redirect or clear form logic here
   };
-  const changeFormState = () => {
-    if (closeForm) {
-      closeForm(); // Call the function passed from the parent
-    }
-  };  
+  
+
   return (
     <>
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md border">
+    {
+      hideForm && (
+        <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
       <img src="./src/assets/logo.png" alt="" className="h-12 mx-auto mb-4" />
-        <h2 className="text-2xl font-semibold mb-4 text-center text-gray-700">Add Child Profile</h2>
-        {error && <p className="text-red-500 text-sm text-center mb-4">{error}</p>}
-        <form onSubmit={handleAddChildProfile} className="flex flex-col space-y-4">
-          <div>
-            <label className="block text-gray-600 text-sm font-medium mb-1">First Name:</label>
-            <input
-              type="text"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              required
-              className="w-full p-2 border rounded focus:ring focus:ring-blue-300"
-            />
-          </div>
+      <h2 className="text-2xl font-semibold mb-4 text-center text-gray-700">Add Child Profile</h2>
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col space-y-4">
+        <div>
+          <label className="block text-gray-600 text-sm font-medium mb-1">First Name:</label>
+          <input
+            type="text"
+            {...register("firstName", { required: "First name is required" })}
+            className="w-full p-2 border rounded focus:ring focus:ring-blue-300"
+          />
+          {errors.firstName && <p className="text-red-500 text-sm">{errors.firstName.message}</p>}
+        </div>
 
-          <div>
-            <label className="block text-gray-600 text-sm font-medium mb-1">Last Name:</label>
-            <input
-              type="text"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-              required
-              className="w-full p-2 border rounded focus:ring focus:ring-blue-300"
-            />
-          </div>
+        <div>
+          <label className="block text-gray-600 text-sm font-medium mb-1">Last Name:</label>
+          <input
+            type="text"
+            {...register("lastName", { required: "Last name is required" })}
+            className="w-full p-2 border rounded focus:ring focus:ring-blue-300"
+          />
+          {errors.lastName && <p className="text-red-500 text-sm">{errors.lastName.message}</p>}
+        </div>
 
-          <div>
-            <label className="block text-gray-600 text-sm font-medium mb-1">Child Age:</label>
-            <input
-              type="number"
-              value={childAge}
-              onChange={(e) => setChildAge(e.target.value)}
-              required
-              className="w-full p-2 border rounded focus:ring focus:ring-blue-300"
-            />
-          </div>
+        <div>
+          <label className="block text-gray-600 text-sm font-medium mb-1">Child Age:</label>
+          <input
+            type="number"
+            {...register("childAge", { required: "Child age is required" })}
+            className="w-full p-2 border rounded focus:ring focus:ring-blue-300"
+          />
+          {errors.childAge && <p className="text-red-500 text-sm">{errors.childAge.message}</p>}
+        </div>
 
-          <div>
-            <label className="block text-gray-600 text-sm font-medium mb-1">Grade:</label>
-            <select
-              value={grade}
-              onChange={(e) => setGrade(e.target.value)}
-              required
-              className="w-full p-2 border rounded focus:ring focus:ring-blue-300"
-            >
-              <option value="">Select Grade</option>
-              <option value="Grade 1">Primary 1</option>
-              <option value="Grade 2">Primary 2</option>
-              <option value="Grade 3">Primary 3</option>
-              <option value="Grade 4">Primary 4</option>
-              <option value="Grade 5">Primary 5</option>
-              <option value="Grade 6">Primary 6</option>
-            </select>
-          </div>
+        <div>
+          <label className="block text-gray-600 text-sm font-medium mb-1">Grade:</label>
+          <select
+            {...register("grade", { required: "Grade is required" })}
+            className="w-full p-2 border rounded focus:ring focus:ring-blue-300"
+          >
+            <option value="">Select Grade</option>
+            <option value="Grade 1">Primary 1</option>
+            <option value="Grade 2">Primary 2</option>
+            <option value="Grade 3">Primary 3</option>
+            <option value="Grade 4">Primary 4</option>
+            <option value="Grade 5">Primary 5</option>
+            <option value="Grade 6">Primary 6</option>
+          </select>
+          {errors.grade && <p className="text-red-500 text-sm">{errors.grade.message}</p>}
+        </div>
 
-          <div>
-            <label className="block text-gray-600 text-sm font-medium mb-1">Child Photo:</label>
-            <input
-              type="file"
-              value={childPhoto}
-              onChange={(e) => setChildPhoto(e.target.value)}
-              className="w-full p-2 border rounded focus:ring focus:ring-blue-300"
-            />
-          </div>
+        <div>
+          <label className="block text-gray-600 text-sm font-medium mb-1">Child Photo:</label>
+          <input
+            type="file"
+            {...register("childPhoto", { required: "Child photo is required" })}
+            className="w-full p-2 border rounded focus:ring focus:ring-blue-300"
+            accept="image/*"
+          />
+          {errors.childPhoto && (
+            <p className="text-red-500 text-sm">{errors.childPhoto.message}</p>
+          )}
+        </div>
 
-          <div className="flex justify-between gap-5">
+        <div className="flex justify-between gap-5">
           <button
             type="submit"
             className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition"
           >
             Add Profile
           </button>
-
-          <button onClick={changeFormState} className="bg-slate-500 text-white p-2 rounded">
+          <button
+            type="button"
+            onClick={closeForm}
+            className="bg-slate-500 text-white p-2 rounded"
+          >
             Cancel
           </button>
-          </div>
-        </form>
-      </div>
-    </>
+        </div>
+      </form>
+    </div>
+      )
+    }
+  </>  
   );
 };
 

@@ -11,82 +11,137 @@ import { Link } from "react-router-dom";
 const TeacherLessonsSection = () => {
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
   const [lessons, setLessons] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [refresh, setRefresh] = useState(false);
+  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     fetchLessons();
-  }, []);
+  }, [refresh]);
 
+  const token = JSON.parse(sessionStorage.getItem("user"));
   const fetchLessons = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get("http://localhost:3001/courses");
+      const response = await axios.get("https://brainbounce.onrender.com/api/getCourses", 
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include the token
+            "Content-Type": "multipart/form-data", } });
       setLessons(response.data);
     } catch (error) {
       toast.error("Failed to fetch courses");
-      console.error("Error fetching lessons:", error);
     } finally {
       setIsLoading(false);
     }
   };
 
+  const handlingShowingForm = (formState)=>{
+    setShowForm(formState)
+  }
+
   const onSubmit = async (data) => {
     try {
-      const token = sessionStorage.getItem("token");
+      const token = JSON.parse(sessionStorage.getItem("user"));
       if (!token) throw new Error("No token found");
-      const decodedToken = jwtDecode(token);
-      const userId = decodedToken.id;
 
-      const newCourse = {
-        courseName: data.courseName,
-        userId,
-        lessons: data.lessons.map(lesson => ({
-          lessonTitle: lesson.lessonTitle,
-          lessonFiles: lesson.lessonFiles,
-          exercise: lesson.exercise
-        })),
-        grade: data.grade,
-        totalLessons: data.lessons.length
-      };
+      const decoded = jwtDecode(token);
+      const userId = decoded.userId; // Ensure this matches your token structure
 
-      await axios.post("https://brainbounce.onrender.com/api/uploadCourse", newCourse);
-      toast.success("Course added successfully");
-      fetchLessons();
+      // Construct FormData
+      const formData = new FormData();
+      formData.append("courseName", data.courseTitle);
+      formData.append("teacherId", userId);
+      formData.append("grade", data.grade);
+
+      // Append files
+      Array.from(data.file).forEach((file) => {
+        formData.append("courseFiles", file);
+      });
+
+      // Send to backend
+      const response = await axios.post(
+        "https://brainbounce.onrender.com/api/uploadCourse",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include the token
+            "Content-Type": "multipart/form-data", } 
+        }
+      );
+
+      toast.success("Course added successfully!");
+      setRefresh(prev => !prev);
       reset();
+      handlingShowingForm(false);
     } catch (error) {
-      console.error("Failed to add course:", error);
-      toast.error("Failed to add course");
+      toast.error("An error occurred while adding the course.");
     }
   };
 
-  const handleDownload = (lesson) => {
+
+  const handleDownload = async (lessonLink) => {
     try {
-      if (typeof lesson.fileUrl === "string" && lesson.fileUrl.startsWith("data:")) {
-        const link = document.createElement("a");
-        link.href = lesson.fileUrl;
-        link.download = `${lesson.title.replace(/\s+/g, "_")}.pdf`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        toast.success(`Downloaded ${lesson.title}`);
-      } else {
-        window.open(`${lesson.fileUrl}`, "_blank");
-        toast.success(`Opened ${lesson.title}`);
+      console.log(lessonLink);
+      const token = JSON.parse(sessionStorage.getItem("user"));
+      if (!token) {
+        toast.error("Unauthorized: No token found.");
+        return;
       }
+  
+      if (!lessonLink) {
+        console.error("Error: lessonLink is undefined or empty");
+        toast.error("Error: Lesson link is missing.");
+        return;
+      }
+  
+      const response = await axios.post(
+        "https://brainbounce.onrender.com/api/downloadCourse",
+        { courseLink: lessonLink }, // ✅ Send as JSON
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json", // ✅ Change content type
+          }
+        }
+      );
+  
+      console.log("Response:", response);
+      const url= response.data.download_url;
+      console.log(url);
+  
+      // const url = window.URL.createObjectURL(response.data);
+      // const link = document.createElement("a");
+  
+      // const filename = response.headers["content-disposition"]
+      //   ? response.headers["content-disposition"].split("filename=")[1]
+      //   : "lesson.pdf";
+  
+      // link.href = url;
+      // link.setAttribute("download", filename);
+      // document.body.appendChild(link);
+      // link.click();
+      // document.body.removeChild(link);
+  
+      toast.success("Downloading lesson...");
     } catch (error) {
       console.error("Download failed:", error);
       toast.error("Download failed. Please try again.");
     }
   };
+  
+  
 
-  const handleDeleteCourse = async (courseId) => {
+  const handleDeleteCourse = async (_id) => {
     try {
-      await axios.delete(`http://localhost:3001/courses/${courseId}`);
+      await axios.delete(`https://brainbounce.onrender.com/api/course/${_id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Include the token
+          "Content-Type": "multipart/form-data", } });
+          
       toast.success("Course deleted successfully");
       fetchLessons();
     } catch (error) {
-      console.error("Delete course failed:", error);
       toast.error("Failed to delete course");
     }
   };
@@ -99,7 +154,7 @@ const TeacherLessonsSection = () => {
         
         <div className="flex gap-4">
           <button
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => handlingShowingForm(true)}
             className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
           >
             <IoAddOutline className="mr-2" /> Add Course
@@ -123,17 +178,17 @@ const TeacherLessonsSection = () => {
       ) : (
         <ul className="space-y-4">
           {lessons.map((lesson) => (
-            <li key={lesson.id} className="flex justify-between items-center bg-gray-100 p-4 rounded-lg shadow hover:bg-gray-200 transition-colors">
+            <li key={lesson._id} className="flex justify-between items-center bg-gray-100 p-4 rounded-lg shadow hover:bg-gray-200 transition-colors">
               <span className="text-lg font-medium flex-grow">{lesson.courseName}</span>
               <div className="flex space-x-2">
                 <button
-                  onClick={() => handleDownload(lesson)}
+                  onClick={() => handleDownload(lesson.courseLink)}
                   className="flex items-center px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
                 >
                   <FiDownload className="mr-2" /> Download
                 </button>
                 <button
-                  onClick={() => handleDeleteCourse(lesson.id)}
+                  onClick={() => handleDeleteCourse(lesson._id)}
                   className="flex items-center px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
                 >
                   <FiTrash2 />
@@ -143,7 +198,7 @@ const TeacherLessonsSection = () => {
           ))}
         </ul>
       )}
-      <AddCourse stateObjectData={{ isModalOpen }} functionObjectData={{ setIsModalOpen, onSubmit }} />
+      <AddCourse functionObjectData={{ handlingShowingForm }} onSubmit={onSubmit} formState={showForm} />
     </div>
   );
 };

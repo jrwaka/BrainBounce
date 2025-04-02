@@ -1,31 +1,50 @@
-import JoditEditor from "jodit-pro-react";
-import React, { useRef, useState } from "react";
+import React, { useState, useRef, useMemo, useEffect } from 'react';
+import JoditEditor from 'jodit-react';
 
-const Example = ({}) => {
+const Example = ({ GetContent }) => {
   const editor = useRef(null);
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState('');
+  const [lastProcessedText, setLastProcessedText] = useState('');
 
-  const config = {
-    readonly: false,
-    uploader: {
-      insertImageAsBase64URI: true, // Important: Use base64 for images
-      insertFileAsBase64URI: true, // Important: Use base64 for files
-      processImage: false, // Prevents Jodit from processing images (optional)
-      processVideo: false, // Prevents Jodit from processing videos (optional)
-      processAudio: false, // Prevents Jodit from processing audio (optional)
-      processFiles: false, //Prevents Jodit from processing files(optional)
-    },
-    filebrowser: false, // Disable file browser if not needed
+  const plainText = useMemo(() => {
+    try {
+      return new DOMParser().parseFromString(content, 'text/html').body.textContent || '';
+    } catch (error) {
+      console.error('Error parsing HTML:', error);
+      return content;
+    }
+  }, [content]);
+
+  const handleOnChangeContent = (newContent) => {
+    if (typeof newContent === 'string') {
+      setContent(newContent);
+    }
   };
+
+  useEffect(() => {
+    if (plainText !== lastProcessedText) {
+      GetContent(plainText);
+      setLastProcessedText(plainText);
+    }
+  }, [plainText, GetContent, lastProcessedText]);
+
+  const config = useMemo(
+    () => ({
+      readonly: false, // all options from https://xdsoft.net/jodit/docs/,
+      placeholder: 'Start typing...', // Ensure placeholder is always a string
+      language: 'en',
+    }),
+    []
+  );
 
   return (
     <JoditEditor
       ref={editor}
       value={content}
       config={config}
-      tabIndex={1}
-      onBlur={(newContent) => setContent(newContent)}
-      onChange={(newContent) => {}}
+      tabIndex={1} // tabIndex of textarea
+      onBlur={handleOnChangeContent} // preferred to use only this option to update the content for performance reasons
+      onChange={handleOnChangeContent}
     />
   );
 };
