@@ -98,25 +98,25 @@ const downloadCourse = async (req, res) => {
     const courseLink = req.body.courseLink
     if (!courseLink) { return res.status(400).json({message:"courseLink is required"})}
 
-    function getPublicId(courseLink) {
-      const regex = /\/upload\/(?:v\d+\/)?([^?]+)/;
-      const match = courseLink.match(regex);
-      return match ? match[1].replace(/\.[^/.]+$/, "") : null;
-    }
+  //   function getPublicId(courseLink) {
+  //     const regex = /\/upload\/(?:v\d+\/)?([^?]+)/;
+  //     const match = courseLink.match(regex);
+  //     return match ? match[1].replace(/\.[^/.]+$/, "") : null;
+  //   }
 
-    let public_id  = getPublicId(courseLink)
-   console.log(public_id)
-    if (!public_id) {
-      return res.status(400).json({ error: "Public ID is missing" });
-    }
+  //   let public_id  = getPublicId(courseLink)
+  //  console.log(public_id)
+  //   if (!public_id) {
+  //     return res.status(400).json({ error: "Public ID is missing" });
+  //   }
 
-       const fileUrl = cloudinary.url(public_id, {
-         resource_type: "raw", // Raw file type (e.g., PDF)
-         secure: true, // Use secure HTTPS URL
-         sign_url: true, // Sign the URL for added security
-         expiration: 3600, // The URL will expire in 1 hour (3600 seconds)
-       });
-    console.log(fileUrl)
+  //      const fileUrl = cloudinary.url(public_id, {
+  //        resource_type: "raw", // Raw file type (e.g., PDF)
+  //        secure: true, // Use secure HTTPS URL
+  //        sign_url: true, // Sign the URL for added security
+  //        expiration: 3600, // The URL will expire in 1 hour (3600 seconds)
+  //      });
+  //   console.log(fileUrl)
 
     res.json({ download_url: fileUrl });
   } catch (error) {
