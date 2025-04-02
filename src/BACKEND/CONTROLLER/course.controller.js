@@ -238,11 +238,34 @@ const deleteCourse = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+
+const getCoursesByGrade = async (req, res) => {
+  try {
+    const childGrade = req.body.grade
+    const Courses = await course.find({ grade:childGrade});
+
+    res.status(200).json(Courses);
+  } catch (error) {}
+};
+
+const getCoursesByTeacher = async (req, res) => {
+  try {
+    const teacher_id = req.params.id;
+    const Courses = await course.find({ teacherId: teacher_id });
+
+    res.status(200).json(Courses);
+  } catch (error) {}
+};
+
+
 module.exports = {
   uploadCourse,
   downloadCourse,
   getCourses,
   getCourse,
   updateCourse,
-  deleteCourse
+  deleteCourse,
+  getCoursesByGrade,
+  getCoursesByTeacher
 };
