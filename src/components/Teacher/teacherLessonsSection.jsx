@@ -79,10 +79,9 @@ const TeacherLessonsSection = () => {
     }
   };
 
-
+  console.log(lessons);
   const handleDownload = async (lessonLink) => {
     try {
-      console.log(lessonLink);
       const token = JSON.parse(sessionStorage.getItem("user"));
       if (!token) {
         toast.error("Unauthorized: No token found.");
@@ -181,12 +180,14 @@ const TeacherLessonsSection = () => {
             <li key={lesson._id} className="flex justify-between items-center bg-gray-100 p-4 rounded-lg shadow hover:bg-gray-200 transition-colors">
               <span className="text-lg font-medium flex-grow">{lesson.courseName}</span>
               <div className="flex space-x-2">
-                <button
-                  onClick={() => handleDownload(lesson.courseLink)}
+                <a
+                  // onClick={() => handleDownload(lesson.courseLink)}
+                  href={lesson.courseLink}
+                  target="_blank"
                   className="flex items-center px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
                 >
                   <FiDownload className="mr-2" /> Download
-                </button>
+                </a>
                 <button
                   onClick={() => handleDeleteCourse(lesson._id)}
                   className="flex items-center px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"

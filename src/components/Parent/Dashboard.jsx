@@ -35,7 +35,7 @@ function Dashboard() {
         }
       );
       setChildrenList(response.data);
-      toast.success("Child Profile Fetched Successfully!");
+      // toast.success("Child Profile Fetched Successfully!");
     } catch (error) {
       console.error("Error fetching child profile:", error);
       toast.error("Failed to fetch child profile");
@@ -62,7 +62,7 @@ function Dashboard() {
   return (
     <div className="flex h-screen w-full ">
       <div className="flex-1 w-full ">
-        <div className="p-6 mx-auto bg-blue-100 rounded-lg shadow-lg">
+        <div className="p-6 mx-auto bg-blue-100 rounded-lg shadow-lg mt-32">
           <h1 className="text-xl font-bold text-blue- mb-4">
             Welcome to the Parent Dashboard, {userName}!
           </h1>
@@ -97,9 +97,6 @@ function Dashboard() {
                         <td className="p-3">{child.firstName} {child.lastName}</td>
                         <td className="p-3">{child.grade}</td>
                         <td className="p-3 flex justify-center gap-2">
-                          <button className="bg-yellow-400 text-gray-900 font-medium py-1 px-3 rounded-md shadow-md hover:bg-yellow-500 transition">
-                            +Add Course
-                          </button>
                           <button
                             onClick={navigateToLink}
                             className="bg-blue-600 text-white font-medium py-1 px-3 rounded-md shadow-md hover:bg-blue-700 transition"
