@@ -37,8 +37,8 @@ const upload = multer({
 
 const uploadCourse = async (req, res) => {
   try {
-    const { courseName, teacherId, grade } = req.body;
-
+    const { courseName, grade } = req.body;
+const id = req.params.id
     // Check if files are uploaded
     if (!req.file) {
       return res
@@ -74,7 +74,7 @@ const downloadLink = `${lessonLink}?download=true`;
 
     const newCourse = new course({
       courseName,
-      teacherId,
+      teacherId:id,
       grade,
       courseLink: downloadLink,
       // lessons,
@@ -242,7 +242,7 @@ const deleteCourse = async (req, res) => {
 
 const getCoursesByGrade = async (req, res) => {
   try {
-    const childGrade = req.body.grade
+    const childGrade = req.params.grade
     const Courses = await course.find({ grade:childGrade});
 
     res.status(200).json(Courses);
