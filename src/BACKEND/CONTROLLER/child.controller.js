@@ -62,4 +62,15 @@ const getChild = async (req, res) => {
   } catch (error) {}
 };
 
-module.exports= { addChild, getChildren, getChild}
+const getParentChildren = async (req, res) => {
+  try {
+    const parent_id = req.params.id;
+    const Children = await child.find({"parentId": parent_id});
+
+    res.status(200).json(Children);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
+module.exports = { addChild, getChildren, getChild, getParentChildren };

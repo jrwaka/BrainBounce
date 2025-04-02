@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 
-// const lessonSchema = new mongoose.Schema({
-//   lessonTitle: { type: String, required: true },
-//   lessonLink: { type: String, required: true },
-//   exercise: { type: String, required: true },
-// });
+const lessonSchema = new mongoose.Schema({
+  lessonTitle: { type: String, required: true },
+  lessonLink: { type: String, required: true },
+  exercise: { type: String, required: true },
+});
 
 const courseSchema = new mongoose.Schema({
   courseName: { type: String, required: true },
@@ -14,7 +14,7 @@ const courseSchema = new mongoose.Schema({
     ref: "User",
   },
   grade: { type: String, required: true },
-  courseLink : { type : String,},
+  courseLink: { type: String, required: true },
   // lessons: [lessonSchema],
   // totalLessons: { type: Number, default: 0 }, // Store the total number of lessons
 });
@@ -25,6 +25,6 @@ const courseSchema = new mongoose.Schema({
 //   next();
 // });
 
-const course = mongoose.model("Course", courseSchema);
+const lesson = mongoose.model("Lesson", lessonSchema);
 
-module.exports = { course }
+module.exports = { course };

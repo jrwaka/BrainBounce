@@ -43,12 +43,12 @@ const uploadCourse = async (req, res) => {
     if (!req.file) {
       return res
         .status(400)
-        .json({ message: "A course file is required" });
+        .json({ message: "A course file is required" }); 
     }
 
     ////Upload to Cloudinary
        const result = await cloudinary.uploader.upload(req.file.path, {
-         resource_type: "auto", // Automatically determine the resource type (image, pdf, etc.)
+         resource_type: "raw", // Automatically determine the resource type (image, pdf, etc.)
        });
     let lessonLink = result.secure_url; // Cloudinary URL
     // // Process lesson files
@@ -68,11 +68,13 @@ const uploadCourse = async (req, res) => {
     // );
 
     // Create course
+const downloadLink = `${lessonLink}?download=true`;
+
     const newCourse = new course({
       courseName,
       teacherId,
       grade,
-      courseLink: lessonLink,
+      courseLink: downloadLink,
       // lessons,
     });
 
@@ -106,10 +108,12 @@ const downloadCourse = async (req, res) => {
       return res.status(400).json({ error: "Public ID is missing" });
     }
 
-    const fileUrl = cloudinary.url(public_id, {
-      resource_type: "raw",
-      secure: true,
-    });
+       const fileUrl = cloudinary.url(public_id, {
+         resource_type: "raw", // Raw file type (e.g., PDF)
+         secure: true, // Use secure HTTPS URL
+         sign_url: true, // Sign the URL for added security
+         expiration: 3600, // The URL will expire in 1 hour (3600 seconds)
+       });
     console.log(fileUrl)
 
     res.json({ download_url: fileUrl });
