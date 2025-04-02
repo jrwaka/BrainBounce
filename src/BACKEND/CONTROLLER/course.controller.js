@@ -24,7 +24,7 @@ const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
     folder: "uploads", // Cloudinary folder name
-    // format: async (req, file) => "png", // Convert all to PNG (optional)
+    format: async (req, file) => "pdf", // Convert all to PNG (optional)
     public_id: (req, file) => file.originalname.split(".")[0],
   },
 });
@@ -51,6 +51,8 @@ const uploadCourse = async (req, res) => {
          resource_type: "raw", // Automatically determine the resource type (image, pdf, etc.)
        });
     let lessonLink = result.secure_url; // Cloudinary URL
+
+    
     // // Process lesson files
     // const lessons = await Promise.all(
     //   req.files.map(async (file, index) => {
