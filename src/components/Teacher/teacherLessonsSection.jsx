@@ -28,7 +28,8 @@ const TeacherLessonsSection = () => {
   const fetchLessons = async (id) => {
     setIsLoading(true);
     try {
-      const response = await axios.get(`https://brainbounce.onrender.com/api/getCourses/${id}`, 
+      const response = await axios.get(`https://brainbounce.onrender.com/api/getCourses/${id}`,
+        
         {
           headers: {
             Authorization: `Bearer ${token}`, // Include the token
