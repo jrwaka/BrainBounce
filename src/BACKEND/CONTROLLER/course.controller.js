@@ -72,13 +72,13 @@ const teacherId = req.params.id
     // );
 
     // Create course
-// const downloadLink = `${lessonLink}?download=true`;
+ const downloadLink = `${lessonLink}?download=true`;
 
     const newCourse = new course({
       courseName,
       teacherId,
       grade,
-      courseLink: lessonLink,
+      courseLink: downloadLink,
       // lessons,
     });
 
