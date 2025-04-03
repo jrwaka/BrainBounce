@@ -12,7 +12,7 @@ const { authorize } = require("../Middlewares/roles.middleware");
 const { uploadCourse,downloadCourse,getCourses,getCourse,updateCourse,deleteCourse,getCoursesByGrade, getCoursesByTeacher } = require("../CONTROLLER/course.controller");
 
 //Router
-router.post("/uploadCourse",protect,authorize("uploadCourse"), upload.single("courseFiles"), uploadCourse);
+router.post("/uploadCourse/:id",protect,authorize("uploadCourse"), upload.single("courseFiles"), uploadCourse);
 router.post("/downloadCourse", protect, authorize("downloadCourse"), downloadCourse);
 router.get("/getCourses", protect, authorize("getCourses"), getCourses);
 router.post("/getCoursesByGrade/:grade", protect, authorize("getCoursesByGrade"), getCoursesByGrade);
