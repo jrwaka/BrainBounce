@@ -15,7 +15,7 @@ const { uploadCourse,downloadCourse,getCourses,getCourse,updateCourse,deleteCour
 router.post("/uploadCourse/:id",protect,authorize("uploadCourse"), upload.single("courseFiles"), uploadCourse);
 router.post("/downloadCourse", protect, authorize("downloadCourse"), downloadCourse);
 router.get("/getCourses", protect, authorize("getCourses"), getCourses);
-router.post("/getCoursesByGrade/:grade", protect, authorize("getCoursesByGrade"), getCoursesByGrade);
+router.get("/getCoursesByGrade/:grade", protect, authorize("getCoursesByGrade"), getCoursesByGrade);
 router.get("/getCourses/:id", protect, authorize("getCoursesByTeacher"), getCoursesByTeacher);
 router.get("/course/:id", protect, authorize("getCourse"), getCourse);
 router.put("/course/:id", protect, authorize("updateCourse"), updateCourse);
