@@ -12,7 +12,7 @@ const signUp = async (req, res) => {
     const hashedpassword = await bcrypt.hash(req.body.password, 10);
     const User = new user({
       firstName: req.body.firstName,
-      secondName: req.body.secondName, 
+      secondName: req.body.secondName,
       password: hashedpassword,
       email: req.body.email,
     grade: req.body.grade,

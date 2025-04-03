@@ -1,108 +1,208 @@
-import { useState } from "react";
-import { FiDownload } from "react-icons/fi";
+import React, { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { FiDownload, FiTrash2 } from "react-icons/fi";
 import { IoAddOutline } from "react-icons/io5";
+import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
+import AddCourse from "../small_component/addCourse";
+import {jwtDecode} from "jwt-decode";
+import { Link } from "react-router-dom";
 
 const TeacherLessonsSection = () => {
-  const [lessons, setLessons] = useState([
-    { id: 1, title: "Math Basics", fileUrl: "/downloads/math_basics.pdf" },
-    { id: 2, title: "Science Fundamentals", fileUrl: "/downloads/science_fundamentals.pdf" },
-    { id: 3, title: "History of Rwanda", fileUrl: "/downloads/history_rwanda.pdf" },
-  ]);
+  const { register, handleSubmit, reset, formState: { errors } } = useForm();
+  const [lessons, setLessons] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [refresh, setRefresh] = useState(false);
+  const [showForm, setShowForm] = useState(false);
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [courseTitle, setCourseTitle] = useState("");
-  const [selectedFile, setSelectedFile] = useState(null);
+  const token = JSON.parse(sessionStorage.getItem("user"));
+      if (!token) throw new Error("No token found");
 
-  const handleDownload = (fileUrl) => {
-    const link = document.createElement("a");
-    link.href = fileUrl;
-    link.download = fileUrl.split("/").pop();
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+      const decoded = jwtDecode(token);
+      const userId = decoded.userId; // Ensure this matches your token structure
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setSelectedFile(file);
-  };
+  useEffect(() => {
+    fetchLessons(userId);
+  }, [refresh]);
 
-  const handleAddCourse = () => {
-    if (!courseTitle || !selectedFile) {
-      alert("Please enter a course title and select a file.");
-      return;
+  const fetchLessons = async (id) => {
+    setIsLoading(true);
+    try {
+      const response = await axios.get(`https://brainbounce.onrender.com/api/getCourses/${id}`,
+        
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include the token
+          }
+         }
+        );
+      setLessons(response.data);
+    } catch (error) {
+      toast.error("Failed to fetch courses");
+    } finally {
+      setIsLoading(false);
     }
+  };
 
-    const newCourse = {
-      id: lessons.length + 1,
-      title: courseTitle,
-      fileUrl: URL.createObjectURL(selectedFile), // Temporary URL
-    };
+  const handlingShowingForm = (formState)=>{
+    setShowForm(formState)
+  }
 
-    setLessons([...lessons, newCourse]);
-    setCourseTitle("");
-    setSelectedFile(null);
-    setIsModalOpen(false);
+  const onSubmit = async (data) => {
+    try {
+
+      // Construct FormData
+      const formData = new FormData();
+      formData.append("courseName", data.courseTitle);
+      formData.append("teacherId", userId);
+      formData.append("grade", data.grade);
+
+      // Append files
+      Array.from(data.file).forEach((file) => {
+        formData.append("courseFiles", file);
+      });
+
+      // Send to backend
+      const response = await axios.post(
+        "https://brainbounce.onrender.com/api/uploadCourse",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include the token
+            "Content-Type": "multipart/form-data", } 
+        }
+      );
+
+      toast.success("Course added successfully!");
+      setRefresh(prev => !prev);
+      reset();
+      handlingShowingForm(false);
+    } catch (error) {
+      toast.error("An error occurred while adding the course.");
+    }
+  };
+
+  console.log(lessons);
+  const handleDownload = async (lessonLink) => {
+    try {
+      const token = JSON.parse(sessionStorage.getItem("user"));
+      if (!token) {
+        toast.error("Unauthorized: No token found.");
+        return;
+      }
+  
+      if (!lessonLink) {
+        console.error("Error: lessonLink is undefined or empty");
+        toast.error("Error: Lesson link is missing.");
+        return;
+      }
+  
+      const response = await axios.post(
+        "https://brainbounce.onrender.com/api/downloadCourse",
+        { courseLink: lessonLink }, // ✅ Send as JSON
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json", // ✅ Change content type
+          }
+        }
+      );
+  
+      console.log("Response:", response);
+      const url= response.data.download_url;
+      console.log(url);
+  
+      // const url = window.URL.createObjectURL(response.data);
+      // const link = document.createElement("a");
+  
+      // const filename = response.headers["content-disposition"]
+      //   ? response.headers["content-disposition"].split("filename=")[1]
+      //   : "lesson.pdf";
+  
+      // link.href = url;
+      // link.setAttribute("download", filename);
+      // document.body.appendChild(link);
+      // link.click();
+      // document.body.removeChild(link);
+  
+      toast.success("Downloading lesson...");
+    } catch (error) {
+      console.error("Download failed:", error);
+      toast.error("Download failed. Please try again.");
+    }
+  };
+  
+  
+
+  const handleDeleteCourse = async (_id) => {
+    try {
+      await axios.delete(`https://brainbounce.onrender.com/api/course/${_id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Include the token
+          "Content-Type": "multipart/form-data", } });
+          
+      toast.success("Course deleted successfully");
+      fetchLessons(userId);
+    } catch (error) {
+      toast.error("Failed to delete course");
+    }
   };
 
   return (
-    <div className="p-6 pl-64">
-      <h2 className="text-2xl font-bold mb-4">📚 Lessons</h2>
-      <ul className="space-y-4">
-        {lessons.map((lesson) => (
-          <li key={lesson.id} className="flex justify-between items-center bg-gray-100 p-4 rounded-lg shadow">
-            <span className="text-lg font-medium">{lesson.title}</span>
-            <button
-              onClick={() => handleDownload(lesson.fileUrl)}
-              className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-            >
-              <FiDownload className="mr-2" /> Download
-            </button>
-          </li>
-        ))}
-      </ul>
-      <button
-        onClick={() => setIsModalOpen(true)}
-        className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 mt-10"
-      >
-        <IoAddOutline className="mr-2" /> Add Course
-      </button>
+    <div className="p-6 relative">
+      <Toaster position="top-right" />
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-2xl font-bold">📚 Courses</h2>
+        
+        <div className="flex gap-4">
+          <button
+            onClick={() => handlingShowingForm(true)}
+            className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          >
+            <IoAddOutline className="mr-2" /> Add Course
+          </button>
 
-      {/* Modal */}
-      {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-            <h3 className="text-xl font-bold mb-4">Add New Course</h3>
-            <input
-              type="text"
-              value={courseTitle}
-              onChange={(e) => setCourseTitle(e.target.value)}
-              placeholder="Enter course title"
-              className="w-full p-2 border border-gray-300 rounded mb-4"
-            />
-            <input
-              type="file"
-              onChange={handleFileChange}
-              className="w-full p-2 border border-gray-300 rounded mb-4"
-            />
-            {selectedFile && <p className="text-sm text-gray-700">📂 {selectedFile.name}</p>}
-            <div className="flex justify-end space-x-2 mt-4">
-              <button
-                onClick={() => setIsModalOpen(false)}
-                className="px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-500"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleAddCourse}
-                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-              >
-                Add Course
-              </button>
-            </div>
-          </div>
+          {/* <Link 
+            to="../addLesson" 
+            className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          >
+            <IoAddOutline className="mr-2" /> Add Lesson
+          </Link> */}
         </div>
+
+      </div>
+      {isLoading ? (
+        <div className="text-center text-gray-500">Loading courses...</div>
+      ) : lessons.length === 0 ? (
+        <div className="text-center text-gray-500 p-8 bg-gray-100 rounded-lg">
+          No courses available. Click "Add Course" to get started.
+        </div>
+      ) : (
+        <ul className="space-y-4">
+          {lessons.map((lesson) => (
+            <li key={lesson._id} className="flex justify-between items-center bg-gray-100 p-4 rounded-lg shadow hover:bg-gray-200 transition-colors">
+              <span className="text-lg font-medium flex-grow">{lesson.courseName}</span>
+              <div className="flex space-x-2">
+                <a
+                  // onClick={() => handleDownload(lesson.courseLink)}
+                  href={lesson.courseLink}
+                  target="_blank"
+                  className="flex items-center px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                >
+                  <FiDownload className="mr-2" /> Download
+                </a>
+                <button
+                  onClick={() => handleDeleteCourse(lesson._id)}
+                  className="flex items-center px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
+                >
+                  <FiTrash2 />
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
       )}
+      <AddCourse functionObjectData={{ handlingShowingForm }} onSubmit={onSubmit} formState={showForm} />
     </div>
   );
 };

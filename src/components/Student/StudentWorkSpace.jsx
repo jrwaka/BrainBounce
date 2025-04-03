@@ -1,23 +1,61 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { FiArrowRight, FiBook, FiEye, FiStar } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import CourseNavBar from "../small_component/courseNavBar";
+import axios from "axios"
 const StudentWorkSpace = () => {
+  const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const token = JSON.parse(sessionStorage.getItem("user"));
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        // const currentPath = window.location.pathname + window.location.search;
+        const gradeParam = window.location.search.substring(1);
+        const grade = decodeURIComponent(gradeParam);
+        const response = await axios.get("https://brainbounce.onrender.com/api/getCoursesByGrade", {
+          params: { grade },
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        console.log("response.data", response.data)
+        setCourses(response.data);
+      } catch (err) {
+        setError('Failed to fetch courses: ' + (err.response?.data?.message || err.message));
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    fetchCourses();
+  }, []);
+  
   return (
-    <div>
-      {" "}
-      <div className="w-full bg-slate-300 flex-1">
-        <div className="max-w-4xl mx-auto bg-blue-100 rounded-lg shadow-lg">
-          {/* Welcome Message */}
-          <CourseNavBar />
-          <h1 className="text-xl font-bold text-blue- mb-4">
-            Hi, [Student's Name]! 🎈 Are you ready for a new adventure today? 🚀
-          </h1>
-
-
-          
-        </div>
-      </div>
+    <div className="student-courses">
+      <h2>Your Courses</h2>
+      
+      {loading && <p>Loading courses...</p>}
+      {error && <p className="error">{error}</p>}
+      
+      {!loading && !error && (
+        <>
+          {courses.length === 0 ? (
+            <p>No courses found.</p>
+          ) : (
+            <ul className="course-list">
+              {courses.map(course => (
+                <li key={course._id} className="course-item">
+                  <h3>{course.title}</h3>
+                  {course.description && <p>{course.description}</p>}
+                </li>
+              ))}
+            </ul>
+          )}
+        </>
+      )}
     </div>
   );
 };
