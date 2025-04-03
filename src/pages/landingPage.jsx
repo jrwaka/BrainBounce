@@ -6,11 +6,11 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-gray-100 text-gray-900">
       {/* Hero Section */}
-      <section className="bg-[url(./background.jpg)] relative text-center py-64 bg-blue-600 text-white bg-cover bg-center">
+      <section className="bg-[url(/background.jpg)] relative text-center py-64 bg-blue-600 text-white bg-cover bg-center">
         <div className="absolute inset-0 bg-black opacity-50"></div>{" "}
         {/* Shadow overlay */}
         <img
-          src="./src/assets/logo-white.png"
+          src="/src/assets/logo-white.png"
           className="absolute top-4 left-4 h-12"
           alt=""
         />
