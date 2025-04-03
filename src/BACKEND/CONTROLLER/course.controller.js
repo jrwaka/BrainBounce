@@ -23,9 +23,10 @@ const fileFilter = (req, file, cb) => {
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: "uploads", // Cloudinary folder name
-    format: async (req, file) => "pdf", // Convert all to PNG (optional)
-    public_id: (req, file) => file.originalname.split(".")[0],
+    folder: "uploads",
+    resource_type: "raw",
+    format: async (req, file) => "pdf",
+    public_id: (req, file) => file.originalname.split(".")[0] + ".pdf",
   },
 });
 
