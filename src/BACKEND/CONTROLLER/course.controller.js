@@ -37,13 +37,15 @@ const upload = multer({
 
 const uploadCourse = async (req, res) => {
   try {
-    const { teacherId,courseName, grade } = req.body;
-const id = req.params.id
+
+    const { courseName, grade } = req.body;
+const teacherId = req.params.id
+   
     // Check if files are uploaded
     if (!req.file) {
       return res
         .status(400)
-        .json({ message: "A course file is required" }); 
+        .json({ message: "A course file is required" });
     }
 
     ////Upload to Cloudinary
@@ -52,7 +54,7 @@ const id = req.params.id
        });
     let lessonLink = result.secure_url; // Cloudinary URL
 
-    
+
     // // Process lesson files
     // const lessons = await Promise.all(
     //   req.files.map(async (file, index) => {
@@ -70,13 +72,13 @@ const id = req.params.id
     // );
 
     // Create course
-const downloadLink = `${lessonLink}?download=true`;
+// const downloadLink = `${lessonLink}?download=true`;
 
     const newCourse = new course({
       courseName,
       teacherId,
       grade,
-      courseLink: downloadLink,
+      courseLink: lessonLink,
       // lessons,
     });
 
@@ -175,7 +177,7 @@ const getCourses = async (req, res) => {
 };
 const getCourse = async (req, res) => {
   try {
-   
+
     const id = req.params.id;
 
     if (!id) {
@@ -186,7 +188,7 @@ const getCourse = async (req, res) => {
     if (!Course) {return res.status(404).json("Course is not found");}
     res.status(200).json(Course.courseLink);
 
-    
+
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -219,7 +221,7 @@ const deleteCourse = async (req, res) => {
     let item = await course.findById(id);
     let courseUrl = item.courseLink;
 
-   
+
     function getPublicId(courseUrl) {
       const regex = /\/upload\/(?:v\d+\/)?([^?]+)/;
       const match = courseUrl.match(regex);
