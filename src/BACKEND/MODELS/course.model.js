@@ -10,7 +10,6 @@ const courseSchema = new mongoose.Schema({
   courseName: { type: String, required: true },
   teacherId: {
     type: mongoose.Schema.Types.ObjectId,
-    required: true,
     ref: "User",
   },
   grade: { type: String, required: true },
