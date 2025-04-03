@@ -37,8 +37,10 @@ const upload = multer({
 
 const uploadCourse = async (req, res) => {
   try {
+
     const { courseName, grade } = req.body;
 const teacherId = req.params.id
+   
     // Check if files are uploaded
     if (!req.file) {
       return res
