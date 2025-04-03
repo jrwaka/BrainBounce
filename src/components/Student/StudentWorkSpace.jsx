@@ -50,7 +50,6 @@ const StudentWorkSpace = () => {
     // Remove download=true parameter
     let modifiedUrl = url.replace('?download=true', '');
     
-    // Check if the URL is for a Cloudinary raw upload
     if (modifiedUrl.includes('/raw/upload/')) {
       const urlParts = modifiedUrl.split('?')[0];
       const resourceId = urlParts.split('/').pop();
