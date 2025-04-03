@@ -160,7 +160,6 @@ const TeacherDashboard = () => {
 
         {/* Main Content */}
         <div className="flex-1 ml-64 md:p-6">
-          <NavBar userData={userData} setIsSidebarOpen={setIsSidebarOpen} />
           <Outlet context={{ RegisteredStudent }} />
         </div>
       </div>
