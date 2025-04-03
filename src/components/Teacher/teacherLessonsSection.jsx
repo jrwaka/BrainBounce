@@ -64,7 +64,7 @@ const TeacherLessonsSection = () => {
 
       // Send to backend
       const response = await axios.post(
-        "https://brainbounce.onrender.com/api/uploadCourse",
+        `https://brainbounce.onrender.com/api/uploadCourse/${userId}`,
         formData,
         {
           headers: {

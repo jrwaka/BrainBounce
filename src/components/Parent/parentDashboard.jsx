@@ -80,7 +80,7 @@ const ParentDashboard = () => {
                 Dashboard
               </Link>
             </li>
-            <li className="mb-10">
+            {/* <li className="mb-10">
               <Link
                 to="parent-profile"
                 className="flex items-center hover:text-yellow-400"
@@ -95,7 +95,7 @@ const ParentDashboard = () => {
               >
                 <FiBarChart2 className="mr-2" /> Child’s Progress
               </Link>
-            </li>
+            </li> */}
           </ul>
 
           <div className="mt-auto">
