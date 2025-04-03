@@ -13,7 +13,7 @@ function Dashboard() {
 
   const navigate = useNavigate();
   const navigateToLink = (grade) => {
-    navigate(`/studentDashboard/StudentWorkSpace?${grade}`);
+    navigate(`/studentDashboard/StudentWorkSpace?grade=${grade}`);
   };
 
   const gettingUserId = () => {
