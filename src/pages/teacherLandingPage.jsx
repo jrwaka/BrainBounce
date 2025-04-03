@@ -12,7 +12,7 @@ export default function TeacherLandingPage() {
   return (
     <div className="min-h-screen bg-gray-100 text-gray-900">
       {/* Hero Section */}
-      <section className="bg-[url(./src/assets/teacher-background.jpg)] relative text-center py-64 text-white bg-cover bg-center">
+      <section className="bg-[url(./teacher-background.jpg)] relative text-center py-64 text-white bg-cover bg-center">
         <div className="absolute inset-0 bg-black opacity-50"></div>{" "}
         {/* Shadow overlay */}
         <img
@@ -33,20 +33,19 @@ export default function TeacherLandingPage() {
           Welcome to Your Teacher Dashboard
         </h1>
         <p className="mt-4 text-lg relative z-10">
-          Monitor your students' progress, assign lessons, and enhance the
-          learning experience!
+          Add and assign lessons to your grade level! 
         </p>
       </section>
 
       {/* Overview of Features */}
       <section className="py-16 px-6 text-center">
         <h2 className="text-3xl font-semibold">What You Can Do</h2>
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="mt-8 items-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
           <LandSmallcomp
             dataObjects={{
               icon: <FaUsers />,
-              title: "Manage Students",
-              subTitle: "Add and manage student profiles with ease.",
+              title: "Add Courses",
+              subTitle: "Add and manage courses with ease.",
             }}
             compStyle={{
               compWidth: "",
@@ -55,31 +54,9 @@ export default function TeacherLandingPage() {
           <LandSmallcomp
             dataObjects={{
               icon: <FaChalkboardTeacher />,
-              title: "Assign Lessons",
+              title: "Assign Courses",
               subTitle:
-                "Assign tailored lessons based on each student's needs.",
-            }}
-            compStyle={{
-              compWidth: "",
-            }}
-          />
-          <LandSmallcomp
-            dataObjects={{
-              icon: <FaCheckCircle />,
-              title: "Track Assignments.",
-              subTitle:
-                "  Monitor completion of assignments and provide feedback.",
-            }}
-            compStyle={{
-              compWidth: "",
-            }}
-          />
-          <LandSmallcomp
-            dataObjects={{
-              icon: <FaChartBar />,
-              title: "View Analytics.",
-              subTitle:
-                "  Analyze student progress through performance charts.",
+                "Assign courses based on grade level.",
             }}
             compStyle={{
               compWidth: "",

@@ -6,7 +6,7 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-gray-100 text-gray-900">
       {/* Hero Section */}
-      <section className="bg-[url(./src/assets/background.jpg)] relative text-center py-64 bg-blue-600 text-white bg-cover bg-center">
+      <section className="bg-[url(./background.jpg)] relative text-center py-64 bg-blue-600 text-white bg-cover bg-center">
         <div className="absolute inset-0 bg-black opacity-50"></div>{" "}
         {/* Shadow overlay */}
         <img
@@ -75,7 +75,7 @@ export default function LandingPage() {
             dataObjects={{
               icon: <FaChalkboardTeacher />,
               title: " Teacher & Parent Portal",
-              subTitle: "Monitor progress and assign lessons.",
+              subTitle: "Add and assign lessons.",
             }}
           />
         </div>
@@ -84,7 +84,7 @@ export default function LandingPage() {
       {/* How It Works Section */}
       <section className="bg-gray-200 py-16 lg:px-24 px-6 text-center">
         <h2 className="text-2xl font-semibold">How It Works</h2>
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-white shadow-md rounded-xl p-6 text-center">
             <div className="text-4xl font-bold text-blue-800">1</div>
             <p className="mt-2 text-gray-600">Sign up</p>
@@ -96,10 +96,6 @@ export default function LandingPage() {
           <div className="bg-white shadow-md rounded-xl p-6 text-center">
             <div className="text-4xl font-bold text-blue-800">3</div>
             <p className="mt-2 text-gray-600">Access lessons</p>
-          </div>
-          <div className="bg-white shadow-md rounded-xl p-6 text-center">
-            <div className="text-4xl font-bold text-blue-800">4</div>
-            <p className="mt-2 text-gray-600">Track progress</p>
           </div>
         </div>
       </section>

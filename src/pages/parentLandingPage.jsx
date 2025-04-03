@@ -5,7 +5,7 @@ export default function ParentLandingPage() {
   return (
     <div className="min-h-screen bg-gray-100 text-gray-900">
       {/* Hero Section */}
-      <section className="bg-[url(./src/assets/parent-background.jpg)] relative text-center py-64 text-white bg-cover bg-center">
+      <section className="bg-[url(./parent-background.jpg)] relative text-center py-64 text-white bg-cover bg-center">
       <div className="absolute inset-0 bg-black opacity-50"></div> {/* Shadow overlay */}
       <img src="./src/assets/logo-white.png" className="absolute top-4 left-4 h-12" alt="" />
       <Link to="/ParentDashboard" className="absolute top-8 right-5 h-12">Go to Dashboard</Link>
@@ -16,26 +16,16 @@ export default function ParentLandingPage() {
       {/* Overview of Features */}
       <section className="py-16 px-6 text-center">
         <h2 className="text-3xl font-semibold">What You Can Do</h2>
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
           <div className="bg-white shadow-md rounded-xl p-6 text-left">
             <div className="text-4xl text-blue-800 mb-4"><FaUserEdit /></div>
-            <h3 className="text-xl font-semibold">Manage Profile</h3>
-            <p className="mt-2 text-gray-600">Update your child's profile and preferences easily.</p>
+            <h3 className="text-xl font-semibold">Add Child Profile</h3>
+            <p className="mt-2 text-gray-600">Add your child's profile.</p>
           </div>
           <div className="bg-white shadow-md rounded-xl p-6 text-left">
             <div className="text-4xl text-blue-800 mb-4"><FaChalkboardTeacher /></div>
-            <h3 className="text-xl font-semibold">Assign Lessons</h3>
-            <p className="mt-2 text-gray-600">Assign daily lessons and track their progress.</p>
-          </div>
-          <div className="bg-white shadow-md rounded-xl p-6 text-left">
-            <div className="text-4xl text-blue-800 mb-4"><FaChartLine /></div>
-            <h3 className="text-xl font-semibold">Track Progress</h3>
-            <p className="mt-2 text-gray-600">Monitor your child's learning and achievements over time.</p>
-          </div>
-          <div className="bg-white shadow-md rounded-xl p-6 text-left">
-            <div className="text-4xl text-blue-800 mb-4"><FaCogs /></div>
-            <h3 className="text-xl font-semibold">Set Learning Goals</h3>
-            <p className="mt-2 text-gray-600">Set goals to motivate your child's learning journey.</p>
+            <h3 className="text-xl font-semibold">Assign Courses</h3>
+            <p className="mt-2 text-gray-600">Assign courses based on their grade level.</p>
           </div>
         </div>
       </section>
