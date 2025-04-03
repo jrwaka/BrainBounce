@@ -120,14 +120,14 @@ const TeacherDashboard = () => {
                   <FiGrid className="mr-2" /> Dashboard
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link
                   to="teacherProfilePage"
                   className="flex items-center hover:text-yellow-400"
                 >
                   <FiUser className="mr-2" /> Profile
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link
                   to="teacherLessonsSection"
@@ -136,14 +136,14 @@ const TeacherDashboard = () => {
                   <FiBook className="mr-2" /> Lessons & Content
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link
                   to="TeacherStudentProgressPages"
                   className="flex items-center hover:text-yellow-400"
                 >
                   <FiBarChart2 className="mr-2" /> Child’s Progress
                 </Link>
-              </li>
+              </li> */}
             </ul>
 
             {/* Sign Out Button */}
