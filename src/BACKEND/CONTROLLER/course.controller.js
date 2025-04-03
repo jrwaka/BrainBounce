@@ -37,7 +37,7 @@ const upload = multer({
 
 const uploadCourse = async (req, res) => {
   try {
-    const { courseName, grade } = req.body;
+    const { teacherId,courseName, grade } = req.body;
 const id = req.params.id
     // Check if files are uploaded
     if (!req.file) {
@@ -74,7 +74,7 @@ const downloadLink = `${lessonLink}?download=true`;
 
     const newCourse = new course({
       courseName,
-      teacherId:id,
+      teacherId,
       grade,
       courseLink: downloadLink,
       // lessons,

@@ -1,7 +1,8 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { FiArrowRight, FiBook, FiEye, FiStar } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import CourseNavBar from "../small_component/courseNavBar";
+import axios from "axios"
 const StudentWorkSpace = () => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -11,7 +12,7 @@ const StudentWorkSpace = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const currentPath = window.location.pathname + window.location.search;
+        // const currentPath = window.location.pathname + window.location.search;
         const gradeParam = window.location.search.substring(1);
         const grade = decodeURIComponent(gradeParam);
         const response = await axios.get("https://brainbounce.onrender.com/api/getCoursesByGrade", {
@@ -20,7 +21,7 @@ const StudentWorkSpace = () => {
             Authorization: `Bearer ${token}`
           }
         });
-        
+        console.log("response.data", response.data)
         setCourses(response.data);
       } catch (err) {
         setError('Failed to fetch courses: ' + (err.response?.data?.message || err.message));
