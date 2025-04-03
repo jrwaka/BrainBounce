@@ -43,27 +43,12 @@ const StudentWorkSpace = () => {
     fetchCourses();
   }, [token, searchParams]);
   
-  // Function to modify Cloudinary URLs to prevent auto-download and add PDF extension
   const getViewableUrl = (url) => {
     if (!url) return '#';
-    
-    // Remove download=true parameter
     let modifiedUrl = url.replace('?download=true', '');
-    
-    if (modifiedUrl.includes('/raw/upload/')) {
-      const urlParts = modifiedUrl.split('?')[0];
-      const resourceId = urlParts.split('/').pop();
-      if (modifiedUrl.includes('?')) {
-        modifiedUrl += '&fl_attachment=false';
-      } else {
-        modifiedUrl += '?fl_attachment=false';
-      }
-    }
-    
     return modifiedUrl;
   };
-  
-  // Toggle between link mode and embed mode
+
   const toggleViewMode = () => {
     setViewMode(viewMode === "link" ? "embed" : "link");
   };
