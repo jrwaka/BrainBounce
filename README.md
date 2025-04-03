@@ -1,16 +1,64 @@
-<<<<<<< HEAD
-# React + Vite
+Here’s a README template for your GitHub repository:  
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+---
 
-Currently, two official plugins are available:
+# BrainBounce Web App  
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Overview  
+BrainBounce is an educational web application designed to help students continue learning at home. This project provides interactive learning tools for students, parents, and teachers.  
 
-## Expanding the ESLint configuration
+## Features  
+- **Student Portal**: Access to learning materials  
+- **Parent Portal**: Add a profile for their child  
+- **Teacher Portal**: Assign courses based on grade level    
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-=======
-# BrainBounce
->>>>>>> 13a5b9745b1728f2a18818da30f1324950b18c66
+## Tech Stack  
+- **Frontend**: Vite, React.js, Tailwind CSS  
+- **Backend**: Node.js, Express.js  
+- **Database**: MongoDB 
+
+## Prerequisites  
+Ensure you have the following installed:  
+- Node.js (>= 18)  
+- npm or yarn  
+- Git  
+
+## Setup Instructions  
+
+1. **Clone the Repository**  
+   ```bash
+   git clone https://github.com/your-username/brainbounce.git
+   cd brainbounce
+   ```  
+
+2. **Install Dependencies**  
+   ```bash
+   npm install
+   ```  
+
+3. **Set Up Environment Variables**  
+   - Create a `.env` file in the root directory.  
+   - Add necessary environment variables as specified in `.env.example`.  
+
+4. **Run the Development Server**  
+   ```bash
+   npm run dev
+   ```  
+   The app should be available at `http://localhost:5173`.  
+
+5. **Run the Backend (if applicable)**  
+   ```bash
+   cd backend
+   npm install
+   npm start
+   ```  
+
+## Deployment  
+For deployment, follow the instructions for your chosen platform (Vercel, Netlify, or a VPS).  
+
+## Contributing  
+1. Fork the repository.  
+2. Create a new branch (`git checkout -b feature-name`).  
+3. Commit changes (`git commit -m "Description of changes"`).  
+4. Push to the branch (`git push origin feature-name`).  
+5. Open a pull request.  
